@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E&E Scents Perfumes - Your Invisible Beauty Perfectly Scented</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header Navigation */
+        header {
+            background: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #d4a574;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .cart-btn, .user-btn {
+            background: none;
+            border: 1px solid #333;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .cart-btn:hover, .user-btn:hover {
+            background: #333;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 500px;
+            background: 
+                linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                url("images/hero.jpg") center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .shop-btn {
+            background: white;
+            color: #333;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .shop-btn:hover {
+            background: #d4a574;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Featured Scents Section */
+        .featured {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .featured h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: bold;
+        }
+
+        /* Products Grid - 3 columns, 4th product spans full width */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .product-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            background: white;
+        }
+
+        /* Make 4th product span full width */
+        .product-card:nth-child(4) {
+            grid-column: 1 / -1;
+        }
+
+        /* Taller image for 4th product */
+        .product-card:nth-child(4) .product-image {
+            height: 400px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            background: white;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #d4a574;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-info h3 {
+            margin: 0.5rem 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-top: 0.5rem;
+        }
+
+        /* Story Section */
+        .story {
+            background: #f9f9f9;
+            padding: 4rem 2rem;
+        }
+
+        .story-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .story h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        .story-text p {
+            margin-bottom: 1rem;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .story-features {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .feature {
+            display: flex;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #333;
+            border-radius: 5px;
+            flex-shrink: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .feature h3 {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .testimonials > p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #d4a574, #8b6f47);
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
+        /* Blog Section */
+        .blog {
+            background: #f9f9f9;
+            padding: 4rem 2rem;
+        }
+
+        .blog-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .blog h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .blog > p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #555, #333);
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .blog-info {
+            padding: 1.5rem;
+        }
+
+        .blog-info h3 {
+            margin-bottom: 1rem;
+        }
+
+        .blog-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background: #f0f0f0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .newsletter h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .newsletter p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .subscribe-btn {
+            background: #333;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+            font-weight: 600;
+        }
+
+        .subscribe-btn:hover {
+            background: #d4a574;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #d4a574;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                height: 400px;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .story-content {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            /* Mobile: Show 4 products in 2x2 grid, all equal size */
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            /* Reset 4th product to normal size on mobile */
+            .product-card:nth-child(4) {
+                grid-column: auto;
+            }
+
+            .product-card:nth-child(4) .product-image {
+                height: 200px;
+            }
+
+            .product-image {
+                height: 200px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src='images/E&E SCENTS 2.png' alt="E&E Scents Logo" class="logo-img">
+                <span>E&E SCENTS</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="shop .html">Shop</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="cart-btn" onclick="window.location.href='shop demo.html'">🛒 Cart</button>
+                <button class="user-btn">👤</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div>
+                <h1>E&E Scents Perfumes</h1>
+                <p>Your Invisible Beauty Perfectly Scented.</p>
+                <a href="shop demo.html" class="shop-btn">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Scents -->
+    <section class="featured" id="shop">
+        <h2>Featured Scents</h2>
+        <div class="products-grid">
+            <!-- Product 1 -->
+            <div class="product-card" onclick="window.location.href='shop demo.html'">
+                <div class="product-image">
+                    <img src='images/Lattafa Asad.jpg' alt="Lattafa Asad">
+                </div>
+                <div class="product-info">
+                    <span class="badge">Best Seller</span>
+                    <h3>Lattafa Asad</h3>
+                    <p class="price">₦45,000</p>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card" onclick="window.location.href='shop demo.html'">
+                <div class="product-image">
+                    <img src="images/Lattafa Khamrah Qahwa.jpg" alt="Lattafa Khamrah Qahwa">
+                </div>
+                <div class="product-info">
+                    <span class="badge">Limited Edition</span>
+                    <h3>Lattafa Khamrah Qahwa</h3>
+                    <p class="price">₦65,000</p>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card" onclick="window.location.href='shop demo.html'">
+                <div class="product-image">
+                    <img src="images/Afnan 9PM.jpg" alt="Afnan 9PM">
+                </div>
+                <div class="product-info">
+                    <span class="badge">New</span>
+                    <h3>Afnan 9PM</h3>
+                    <p class="price">₦48,000</p>
+                </div>
+            </div>
+
+            <!-- Product 4 - FULL WIDTH -->
+            <div class="product-card" onclick="window.location.href='shop demo.html'">
+                <div class="product-image">
+                    <img src="images/spraying tomford.jpg" alt="Tom Ford Black Orchid Eau de Parfum">
+                </div>
+                <div class="product-info">
+                    <span class="badge">Best Seller</span>
+                    <h3>Tom Ford Black Orchid Eau de Parfum</h3>
+                    <p class="price">₦249,000</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="story" id="about">
+        <div class="story-content">
+            <div class="story-text">
+                <h2>Our Story</h2>
+                <p>E&E Scents is dedicated to creating unique and luxurious perfumes sourced from the finest ingredients.</p>
+                <p>Each fragrance tells a story, crafted with passion and artistry to bring out your invisible beauty.</p>
+            </div>
+            <div class="story-features">
+                <!-- Feature 1 - ADD IMAGE HERE -->
+                <div class="feature">
+                    <div class="feature-icon">
+                        <!-- TO ADD IMAGE: Uncomment and add path -->
+                        <img src="images/perfume word.jpg" alt="Craftsmanship">
+                    </div>
+                    <div>
+                        <h3>Craftsmanship at Its Finest</h3>
+                        <p>Each E&E Scents perfume is crafted with love and passion, blending unique scents for an extraordinary experience.</p>
+                    </div>
+                </div>
+                <!-- Feature 2 - ADD IMAGE HERE -->
+                <div class="feature">
+                    <div class="feature-icon">
+                        <!-- TO ADD IMAGE: Uncomment and add path -->
+                      <img src="images/i serve.png" alt="Sustainability"> 
+                    </div>
+                    <div>
+                        <h3>Sustainability</h3>
+                        <p>We prioritize sustainability in our sourcing and production processes to protect nature.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <h2>What Our Customers Say</h2>
+        <p>Hear from our esteemed clients about their E&E Scents experience.</p>
+        <div class="testimonials-grid">
+            <!-- Testimonial 1 - ADD IMAGE HERE -->
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="avatar">
+                        <!-- TO ADD IMAGE: Uncomment and add path -->
+                      <img src="images/avatar sophia.jpg" alt="Sophia">
+                    </div>
+                    <div>
+                        <strong>Sophia</strong>
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+                <p>Absolutely exquisite! The scents linger beautifully.</p>
+            </div>
+            <!-- Testimonial 2 - ADD IMAGE HERE -->
+            <div class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="avatar">
+                        <!-- TO ADD IMAGE: Uncomment and add path -->
+                      <img src="images/avaar liam.jpg" alt="Liam">
+                    </div>
+                    <div>
+                        <strong>Liam</strong>
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+                <p>A true luxury experience! I gift E&E to friends often.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog">
+        <div class="blog-content">
+            <h2>Explore Our Latest Posts</h2>
+            <p>Join our community and share your fragrance journey.</p>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="images/unboxing.jpg" alt="Blog post">
+                    </div>
+                    <div class="blog-info">
+                        <h3>Unboxing my new favorite E&E fragrance</h3>
+                        <div class="blog-tags">
+                            <span class="tag">#Unboxing</span>
+                            <span class="tag">#Fragrance</span>
+                            <span class="tag">@E&E_Fans</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="images/cant get enough of.jpg" alt="Blog post"> 
+                    </div>
+                    <div class="blog-info">
+                        <h3>Can't get enough of these beautiful scents! 🌸 #PerfumeAddict</h3>
+                        <div class="blog-tags">
+                            <span class="tag">#Collections</span>
+                            <span class="tag">#Perfect</span>
+                            <span class="tag">Fragrance Lover</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter" id="contact">
+        <h2>Join Our Newsletter</h2>
+        <p>Stay updated with the latest in luxury fragrances.</p>
+        <form class="newsletter-form" onsubmit="return handleSubscribe(event)">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit" class="subscribe-btn">Subscribe</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src='images/E&E SCENTS 2.png' alt="E&E Scents Logo" class="logo-img">
+                <span>E&E SCENTS</span>
+            </div>
+            <div class="footer-links">
+                <a href="#instagram">Follow Us on Instagram</a>
+                <a href="#privacy">Privacy Policy</a>
+            </div>
+            <div>© 2026 E&E Scents Perfumes</div>
+        </div>
+    </footer>
+
+    <script>
+        function handleSubscribe(e) {
+            e.preventDefault();
+            const email = e.target.querySelector('input').value;
+            alert(`Thank you for subscribing with: ${email}`);
+            e.target.reset();
+            return false;
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
