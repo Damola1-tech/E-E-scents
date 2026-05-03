@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Shop &#8212; E&amp;E Scents Perfumes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a96e;
+            --gold-light: #e8d5b0;
+            --dark: #1a1a1a;
+            --mid: #3a3a3a;
+            --cream: #faf8f4;
+            --warm-gray: #9a9080;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 300;
+            background: rgba(250,248,244,0.97);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(201,169,110,0.2);
+        }
+
+        nav {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2.5rem;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+            color: var(--dark);
+            flex-shrink: 0;
+        }
+
+        .logo img {
+            height: 42px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--mid);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a.active { color: var(--gold); }
+        .nav-links a.active::after { width: 100%; }
+
+        .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+
+        .cart-btn {
+            background: var(--dark);
+            color: #fff;
+            border: none;
+            padding: 0.55rem 1.2rem;
+            cursor: pointer;
+            border-radius: 3px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .cart-btn:hover { background: var(--gold); }
+
+        .cart-badge {
+            background: var(--gold);
+            color: #fff;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.68rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 6px 4px;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--dark);
+            border-radius: 2px;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: var(--cream);
+            border-top: 1px solid rgba(201,169,110,0.15);
+            padding: 0 1.5rem;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a {
+            text-decoration: none;
+            color: var(--mid);
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 1.1rem 0;
+            border-bottom: 1px solid rgba(201,169,110,0.12);
+            display: block;
+        }
+
+        .mobile-menu a:last-child { border-bottom: none; }
+
+        /* ── SHOP MAIN ── */
+        .shop-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 3rem 2.5rem 4rem;
+        }
+
+        .shop-header { margin-bottom: 2.5rem; }
+
+        .shop-header h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 400;
+            margin-bottom: 0.4rem;
+        }
+
+        .shop-header p { color: var(--warm-gray); font-size: 0.9rem; }
+
+        /* ── FILTERS ── */
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.4rem;
+            border-bottom: 1px solid rgba(201,169,110,0.22);
+            flex-wrap: wrap;
+            gap: 0.9rem;
+        }
+
+        .filter-left { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+        .filter-btn {
+            padding: 0.48rem 1.1rem;
+            border: 1px solid #ddd;
+            background: transparent;
+            border-radius: 2px;
+            cursor: pointer;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.76rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: all 0.25s;
+            color: var(--mid);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .filter-btn.active { background: var(--dark); border-color: var(--dark); color: white; }
+
+        .sort-select {
+            padding: 0.48rem 0.9rem;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.8rem;
+            background: transparent;
+            color: var(--mid);
+            cursor: pointer;
+        }
+
+        /* ── PRODUCTS GRID ── */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 1.8rem;
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            border-radius: 3px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+            transition: transform 0.32s, box-shadow 0.32s;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .product-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 14px 32px rgba(0,0,0,0.11);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #f2ede7, #e0d8cc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img { transform: scale(1.05); }
+
+        .badge {
+            position: absolute;
+            top: 10px; left: 10px;
+            background: var(--dark);
+            color: white;
+            padding: 0.28rem 0.7rem;
+            border-radius: 2px;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            z-index: 1;
+        }
+
+        .badge.limited { background: var(--gold); }
+        .badge.new-badge { background: #4a7c59; }
+
+        .quick-add {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border: none;
+            padding: 0.6rem 1.4rem;
+            border-radius: 2px;
+            cursor: pointer;
+            font-family: 'Jost', sans-serif;
+            font-weight: 600;
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            opacity: 0;
+            transition: opacity 0.3s, background 0.25s, color 0.25s;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        .product-card:hover .quick-add { opacity: 1; }
+        .quick-add:hover { background: var(--dark); color: white; }
+
+        .product-info { padding: 1.3rem 1.4rem 1.5rem; }
+
+        .product-category {
+            color: var(--warm-gray);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            margin-bottom: 0.35rem;
+        }
+
+        .product-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+            line-height: 1.3;
+        }
+
+        .product-description {
+            color: var(--warm-gray);
+            font-size: 0.82rem;
+            margin-bottom: 0.9rem;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-footer { display: flex; justify-content: space-between; align-items: center; }
+
+        .price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+        }
+
+        .rating { color: #c9a030; font-size: 0.82rem; }
+
+        /* ── PRODUCT MODAL ── */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 500;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .modal.active { display: flex; align-items: center; justify-content: center; }
+
+        .modal-content {
+            background: white;
+            border-radius: 4px;
+            max-width: 920px;
+            width: 100%;
+            max-height: 94vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            background: #f0ece6;
+            border: none;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            line-height: 1;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover { background: var(--dark); color: white; }
+
+        .modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .modal-image {
+            height: 520px;
+            background: linear-gradient(135deg, #f2ede7, #e0d8cc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 7rem;
+            overflow: hidden;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .modal-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .modal-details {
+            padding: 2.5rem 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            overflow-y: auto;
+        }
+
+        .modal-details h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.9rem;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        .modal-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .modal-description { color: var(--warm-gray); line-height: 1.8; font-size: 0.88rem; }
+
+        .scent-notes h4,
+        .size-selector h4,
+        .quantity-selector h4 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--warm-gray);
+            margin-bottom: 0.65rem;
+        }
+
+        .notes-list { display: flex; flex-direction: column; gap: 0.38rem; }
+
+        .note-item { display: flex; gap: 0.5rem; font-size: 0.86rem; }
+        .note-label { font-weight: 600; min-width: 65px; color: var(--mid); }
+
+        .size-options { display: flex; gap: 0.65rem; flex-wrap: wrap; }
+
+        .size-btn {
+            padding: 0.5rem 1.1rem;
+            border: 1px solid #ddd;
+            background: transparent;
+            border-radius: 2px;
+            cursor: pointer;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.22s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .size-btn:hover, .size-btn.active { background: var(--dark); border-color: var(--dark); color: white; }
+
+        .quantity-controls { display: flex; align-items: center; gap: 1rem; }
+
+        .qty-btn {
+            width: 34px; height: 34px;
+            border: 1px solid #ddd;
+            background: transparent;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.22s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .qty-btn:hover { background: var(--dark); border-color: var(--dark); color: white; }
+
+        .qty-display { font-size: 1.1rem; font-weight: 600; min-width: 32px; text-align: center; }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 0.95rem;
+            background: var(--dark);
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.84rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.28s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .add-to-cart-btn:hover { background: var(--gold); }
+
+        .wishlist-btn {
+            width: 100%;
+            padding: 0.85rem;
+            background: transparent;
+            color: var(--mid);
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: border-color 0.22s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .wishlist-btn:hover { border-color: var(--dark); }
+
+        /* ── CART OVERLAY + SIDEBAR ── */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.38);
+            z-index: 600;
+        }
+
+        .overlay.active { display: block; }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0; right: -440px;
+            width: 420px;
+            max-width: 100vw;
+            height: 100%;
+            background: white;
+            box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+            transition: right 0.34s cubic-bezier(.4,0,.2,1);
+            z-index: 700;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.active { right: 0; }
+
+        .cart-header {
+            padding: 1.4rem 1.6rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .cart-header h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.45rem;
+            font-weight: 600;
+        }
+
+        .cart-close {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--mid);
+            line-height: 1;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .cart-items { flex: 1; overflow-y: auto; padding: 1.4rem 1.6rem; }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.4rem;
+            padding-bottom: 1.4rem;
+            border-bottom: 1px solid #f0ece6;
+        }
+
+        .cart-item-image {
+            width: 72px; height: 72px;
+            background: linear-gradient(135deg, #f2ede7, #e0d8cc);
+            border-radius: 3px;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .cart-item-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .cart-item-details { flex: 1; min-width: 0; }
+
+        .cart-item-details h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.18rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cart-item-size { font-size: 0.76rem; color: var(--warm-gray); margin-bottom: 0.55rem; }
+
+        .cart-item-footer { display: flex; justify-content: space-between; align-items: center; }
+
+        .cart-item-qty { display: flex; align-items: center; gap: 0.45rem; }
+
+        .cart-qty-btn {
+            width: 24px; height: 24px;
+            border: 1px solid #ddd;
+            background: transparent;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .cart-qty-btn:hover { background: var(--dark); color: white; border-color: var(--dark); }
+
+        .cart-item-price { font-weight: 600; font-size: 0.92rem; }
+
+        .cart-remove {
+            background: none;
+            border: none;
+            color: var(--warm-gray);
+            cursor: pointer;
+            font-size: 0.76rem;
+            text-decoration: underline;
+            margin-top: 0.35rem;
+            font-family: 'Jost', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .cart-empty { text-align: center; padding: 3rem 1rem; color: var(--warm-gray); }
+        .cart-empty p { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; margin-bottom: 0.4rem; }
+        .cart-empty small { font-size: 0.82rem; }
+
+        .cart-footer {
+            padding: 1.4rem 1.6rem;
+            border-top: 1px solid #eee;
+            flex-shrink: 0;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--dark);
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.84rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.28s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .checkout-btn:hover { background: var(--gold); }
+
+        /* ── CHECKOUT MODAL ── */
+        .checkout-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 800;
+            overflow-y: auto;
+            padding: 2rem 1rem;
+        }
+
+        .checkout-modal.active { display: flex; align-items: flex-start; justify-content: center; }
+
+        .checkout-modal-content {
+            background: white;
+            border-radius: 4px;
+            max-width: 540px;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .checkout-modal-header {
+            padding: 2rem 2rem 1.2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checkout-modal-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.75rem;
+            font-weight: 400;
+            margin-bottom: 0.25rem;
+        }
+
+        .checkout-modal-header p { color: var(--warm-gray); font-size: 0.86rem; }
+
+        .checkout-form { padding: 1.8rem 2rem 2rem; }
+
+        .form-group { margin-bottom: 1.2rem; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.42rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--mid);
+        }
+
+        .required { color: var(--gold); }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.78rem 0.95rem;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.9rem;
+            background: #faf8f4;
+            transition: border-color 0.2s;
+            -webkit-appearance: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus { outline: none; border-color: var(--gold); background: white; }
+
+        .form-group textarea { resize: vertical; min-height: 78px; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        .order-summary {
+            background: #faf8f4;
+            border: 1px solid rgba(201,169,110,0.18);
+            padding: 1.2rem;
+            border-radius: 3px;
+            margin-bottom: 1.4rem;
+        }
+
+        .order-summary h3 {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--warm-gray);
+            margin-bottom: 0.85rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.55rem;
+            font-size: 0.86rem;
+            color: var(--mid);
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 0.75rem;
+            margin-top: 0.75rem;
+            border-top: 1px solid #ddd;
+            font-weight: 600;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.12rem;
+        }
+
+        .form-actions { display: flex; gap: 0.75rem; }
+
+        .submit-order-btn {
+            flex: 1;
+            padding: 1rem;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.84rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: background 0.28s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .submit-order-btn:hover { background: #1ea952; }
+
+        .cancel-btn {
+            padding: 1rem 1.2rem;
+            background: #f0ece6;
+            color: var(--mid);
+            border: none;
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.84rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .cancel-btn:hover { background: #e5e0d8; }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 2rem; left: 50%;
+            transform: translateX(-50%) translateY(120px);
+            background: var(--dark);
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 3px;
+            font-size: 0.84rem;
+            font-weight: 500;
+            z-index: 900;
+            transition: transform 0.38s cubic-bezier(.4,0,.2,1);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* ══════════════════════════
+           RESPONSIVE — 900px tablet
+        ══════════════════════════ */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+        }
+
+        /* ══════════════════════════
+           RESPONSIVE — 600px mobile
+        ══════════════════════════ */
+        @media (max-width: 600px) {
+            nav { padding: 0 1.2rem; height: 60px; }
+            .logo img { height: 34px; }
+            .logo-text { font-size: 1rem; }
+            .cart-btn { padding: 0.45rem 0.85rem; font-size: 0.75rem; }
+
+            .shop-container { padding: 2rem 1.2rem 3rem; }
+
+            .filter-section { flex-direction: column; align-items: flex-start; }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.9rem;
+            }
+
+            .product-image { height: 170px; font-size: 2.5rem; }
+            .quick-add { display: none; }
+
+            .product-info { padding: 0.85rem 0.9rem 1rem; }
+            .product-info h3 { font-size: 0.92rem; }
+            .price { font-size: 1rem; }
+            .product-description { display: none; }
+
+            /* Modal full-screen on mobile */
+            .modal { padding: 0; align-items: flex-end; }
+            .modal-content { border-radius: 12px 12px 0 0; max-height: 92vh; }
+            .modal-body { grid-template-columns: 1fr; }
+            .modal-image { height: 250px; border-radius: 12px 12px 0 0; font-size: 4rem; }
+            .modal-details { padding: 1.5rem 1.5rem 2rem; }
+
+            /* Cart full width on mobile */
+            .cart-sidebar { width: 100%; right: -100%; }
+
+            /* Checkout form */
+            .checkout-form { padding: 1.4rem 1.2rem 1.8rem; }
+            .checkout-modal-header { padding: 1.5rem 1.2rem 1rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .form-actions { flex-direction: column; }
+            .submit-order-btn, .cancel-btn { width: 100%; }
+
+            .toast { font-size: 0.8rem; padding: 0.75rem 1.4rem; bottom: 1.4rem; }
+        }
+
+        /* Very small phones */
+        @media (max-width: 380px) {
+            .products-grid { gap: 0.6rem; }
+            .product-image { height: 145px; }
+            .product-info h3 { font-size: 0.82rem; }
+            .price { font-size: 0.9rem; }
+            .filter-btn { font-size: 0.7rem; padding: 0.42rem 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                <img src="images/E&E SCENTS 2.png" alt="E&amp;E Scents"
+                     onerror="this.style.display='none'">
+                <span class="logo-text">E&amp;E SCENTS</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html" class="active">Shop</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="cart-btn" onclick="toggleCart()">
+                    &#128717; Cart
+                    <span class="cart-badge" id="cartCount">0</span>
+                </button>
+                <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html" onclick="closeMenu()">Home</a>
+            <a href="shop.html" onclick="closeMenu()">Shop</a>
+            <a href="index.html#about" onclick="closeMenu()">About</a>
+            <a href="index.html#contact" onclick="closeMenu()">Contact</a>
+        </div>
+    </header>
+
+    <div class="shop-container">
+        <div class="shop-header">
+            <h1>Our Collection</h1>
+            <p>Discover your signature scent from our luxurious collection</p>
+        </div>
+
+        <div class="filter-section">
+            <div class="filter-left">
+                <button class="filter-btn active" onclick="filterProducts('all', this)">All</button>
+                <button class="filter-btn" onclick="filterProducts('men', this)">Men's</button>
+                <button class="filter-btn" onclick="filterProducts('women', this)">Women's</button>
+                <button class="filter-btn" onclick="filterProducts('unisex', this)">Unisex</button>
+                <button class="filter-btn" onclick="filterProducts('new', this)">New Arrivals</button>
+            </div>
+            <select class="sort-select" onchange="sortProducts(this.value)">
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="name">Name: A to Z</option>
+            </select>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&#215;</button>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Cart overlay -->
+    <div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="cart-close" onclick="toggleCart()">&#215;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty">
+                <p>Your cart is empty</p>
+                <small>Add some fragrances to get started</small>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cartTotal">&#8358;0</span>
+            </div>
+            <button class="checkout-btn" onclick="openCheckoutForm()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-modal-content">
+            <div class="checkout-modal-header">
+                <h2>Complete Your Order</h2>
+                <p>Fill in your details — we'll connect via WhatsApp</p>
+            </div>
+            <form class="checkout-form" onsubmit="submitOrder(event)">
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <div id="orderSummaryItems"></div>
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span id="summaryTotal">&#8358;0</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Full Name <span class="required">*</span></label>
+                    <input type="text" id="customerName" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="customerPhone" required placeholder="+234 800 000 0000">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="customerEmail" placeholder="your.email@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address <span class="required">*</span></label>
+                    <textarea id="customerAddress" required placeholder="Enter your complete delivery address"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City <span class="required">*</span></label>
+                        <input type="text" id="customerCity" required placeholder="Lagos">
+                    </div>
+                    <div class="form-group">
+                        <label>State <span class="required">*</span></label>
+                        <select id="customerState" required>
+                            <option value="">Select State</option>
+                            <option>Lagos</option>
+                            <option>Abuja</option>
+                            <option>Rivers</option>
+                            <option>Kano</option>
+                            <option>Oyo</option>
+                            <option>Ekiti</option>
+                            <option>Delta</option>
+                            <option>Anambra</option>
+                            <option>Ogun</option>
+                            <option>Kaduna</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Special Instructions (Optional)</label>
+                    <textarea id="specialInstructions" placeholder="Any special delivery notes"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-order-btn">&#128241; Send Order via WhatsApp</button>
+                    <button type="button" class="cancel-btn" onclick="closeCheckoutForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        /* ── CONFIG ── */
+        const WHATSAPP_NUMBER = '2349135688583';
+
+        /* ── PRODUCTS (clean, no duplicates, unique IDs) ── */
+        const products = [
+            { id:1,  name:'Lattafa Asad',                   category:'men',    price:45000, badge:'Best Seller', image:'images/Lattafa Asad.jpg',                          emoji:'&#127794;', description:'A rich, oriental fragrance with vanilla and spices.',                                               notes:{top:'Pineapple, Vanilla', middle:'Black Pepper, Tobacco', base:'Coffee, Dry Woods'} },
+            { id:2,  name:'Afnan 9PM',                      category:'unisex', price:48000, badge:'Best Seller', image:'images/Afnan 9PM.jpg',                             emoji:'&#127801;', description:'Sweet spicy fragrance with fresh apple and warm vanilla.',                                        notes:{top:'Apple, Bergamot', middle:'Cinnamon, Lavender', base:'Vanilla, Orange'} },
+            { id:3,  name:'Lattafa Khamrah Qahwa',          category:'unisex', price:65000, badge:'New',         image:'images/Lattafa Khamrah Qahwa.jpg',                  emoji:'&#9749;',   description:'Rich coffee fragrance with vanilla and cinnamon.',                                                notes:{top:'Cinnamon, Coffee', middle:'Cardamom, Vanilla', base:'Musk, Amber'} },
+            { id:4,  name:'Lattafa Oud for Glory',          category:'unisex', price:62000, badge:'Limited',     image:'images/Lattafa Oud for Glory.jpg',                  emoji:'&#128293;', description:'A rich, smoky oud with warm spices, dark woods and a bold luxurious presence.',                 notes:{top:'Saffron, Nutmeg, Lavender', middle:'Rich Oud', base:'Patchouli, Musk'} },
+            { id:5,  name:'Armaf Club De Nuit Intense Man', category:'men',    price:55000, badge:'Best Seller', image:'images/Armaf Club De Nuit Intense Man (2).jpg',     emoji:'&#127769;', description:'Intense and mysterious with smoky birch and spicy undertones.',                                  notes:{top:'Lemon, Pineapple, Nutmeg', middle:'Rose, Birch, Jasmine', base:'Patchouli, Vanilla, Musk, Ambergris'} },
+            { id:6,  name:'Lattafa Najdia',                 category:'men',    price:28000, badge:'Best Seller', image:'images/Lattafa Najdia.jpg',                         emoji:'&#127774;', description:'Fresh, citrusy aquatic with subtle woody warmth — great everyday value.',                        notes:{top:'Bergamot, Lemon', middle:'Cardamom, Lavender', base:'Amber, Musk'} },
+            { id:7,  name:'Maison Alhambra Jean Lowe Noir', category:'men',    price:58000, badge:'New',         image:'images/Maison Alhambra Jean Lowe Noir.jpg',          emoji:'&#127794;', description:'Bold incense and oud-forward scent with warm ginger and jasmine.',                               notes:{top:'Incense, Oud', middle:'Ginger, Jasmine, Nutmeg', base:'Mint, Pink Pepper, Pomelo'} },
+            { id:8,  name:'Maison Alhambra Porto Neroli',   category:'unisex', price:35000, badge:'',            image:'images/Maison Alhambra Porto Neroli.jpg',            emoji:'&#127826;', description:'Sun-drenched citrus fragrance with neroli and a gentle amber finish.',                           notes:{top:'Mandarin, Neroli, Lemon', middle:'Orange Blossom, Lavender, Sea Salt', base:'Amber, Wormwood'} },
+            { id:9,  name:'Yara',                           category:'women',  price:48000, badge:'Best Seller', image:'images/Yara.jpg',                                   emoji:'&#128139;', description:'Sweet, creamy floral scent with a soft feminine touch.',                                         notes:{top:'Orchid, Heliotrope', middle:'Vanilla, Tropical Fruits', base:'Musk, Sandalwood'} },
+            { id:10, name:'Fakhar Rose',                    category:'women',  price:38500, badge:'New',         image:'images/Fakhar Rose.jpg',                            emoji:'&#127800;', description:'Elegant rose fragrance with a modern sweet twist.',                                              notes:{top:'Fruits, Lily', middle:'Rose, Jasmine', base:'Vanilla, White Musk'} },
+            { id:11, name:'Oud Mood',                       category:'unisex', price:42000, badge:'',            image:'images/Oud Mood.jpg',                               emoji:'&#128293;', description:'Rich oriental oud blended with warm spices and caramel.',                                        notes:{top:'Saffron, Rose', middle:'Oud, Caramel', base:'Amber, Incense'} }
+        ];
+
+        /* ── STATE ── */
+        let cart          = [];
+        let currentFilter = 'all';
+        let currentSort   = 'featured';
+        let modalQty      = 1;
+
+        /* ── UTILS ── */
+        function formatPrice(n) {
+            return '&#8358;' + Number(n).toLocaleString();
+        }
+
+        function imgHTML(product) {
+            if (product.image) {
+                return '<img src="' + product.image + '" alt="' + product.name +
+                       '" onerror="this.style.display=\'none\'">';
+            }
+            return product.emoji || '&#127873;';
+        }
+
+        function showToast(msg) {
+            var t = document.getElementById('toast');
+            t.innerHTML = msg;
+            t.classList.add('show');
+            clearTimeout(t._timer);
+            t._timer = setTimeout(function(){ t.classList.remove('show'); }, 2600);
+        }
+
+        /* ── MOBILE MENU ── */
+        function toggleMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+        }
+        function closeMenu() {
+            document.getElementById('mobileMenu').classList.remove('open');
+        }
+        document.addEventListener('click', function(e) {
+            var menu = document.getElementById('mobileMenu');
+            var btn  = document.querySelector('.hamburger');
+            if (menu.classList.contains('open') &&
+                !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('open');
+            }
+        });
+
+        /* ── RENDER ── */
+        function renderProducts() {
+            var grid = document.getElementById('productsGrid');
+            var list = products.slice();
+
+            if (currentFilter === 'new') {
+                list = list.filter(function(p){ return p.badge && p.badge.toLowerCase() === 'new'; });
+            } else if (currentFilter !== 'all') {
+                list = list.filter(function(p){ return p.category === currentFilter; });
+            }
+
+            if (currentSort === 'price-low')  list.sort(function(a,b){ return a.price - b.price; });
+            else if (currentSort === 'price-high') list.sort(function(a,b){ return b.price - a.price; });
+            else if (currentSort === 'name')  list.sort(function(a,b){ return a.name.localeCompare(b.name); });
+
+            if (list.length === 0) {
+                grid.innerHTML = '<p style="color:var(--warm-gray);grid-column:1/-1;text-align:center;padding:3rem 0">No products in this category.</p>';
+                return;
+            }
+
+            grid.innerHTML = list.map(function(p) {
+                var badgeCls = p.badge === 'Limited' ? 'limited' : (p.badge === 'New' ? 'new-badge' : '');
+                return '<div class="product-card" onclick="openModal(' + p.id + ')">' +
+                    '<div class="product-image">' +
+                        (p.badge ? '<span class="badge ' + badgeCls + '">' + p.badge + '</span>' : '') +
+                        imgHTML(p) +
+                        '<button class="quick-add" onclick="event.stopPropagation();quickAdd(' + p.id + ')">+ Quick Add</button>' +
+                    '</div>' +
+                    '<div class="product-info">' +
+                        '<div class="product-category">' + p.category + '</div>' +
+                        '<h3>' + p.name + '</h3>' +
+                        '<p class="product-description">' + p.description + '</p>' +
+                        '<div class="product-footer">' +
+                            '<span class="price">' + formatPrice(p.price) + '</span>' +
+                            '<span class="rating">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        function filterProducts(cat, btn) {
+            currentFilter = cat;
+            document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+            btn.classList.add('active');
+            renderProducts();
+        }
+
+        function sortProducts(val) {
+            currentSort = val;
+            renderProducts();
+        }
+
+        /* ── MODAL ── */
+        function openModal(id) {
+            var p = products.find(function(x){ return x.id === id; });
+            if (!p) return;
+            modalQty = 1;
+
+            document.getElementById('modalBody').innerHTML =
+                '<div class="modal-image">' + imgHTML(p) + '</div>' +
+                '<div class="modal-details">' +
+                    '<h2>' + p.name + '</h2>' +
+                    '<div class="modal-price">' + formatPrice(p.price) + '</div>' +
+                    '<p class="modal-description">' + p.description + '</p>' +
+                    '<div class="scent-notes"><h4>Scent Notes</h4>' +
+                        '<div class="notes-list">' +
+                            '<div class="note-item"><span class="note-label">Top:</span><span>' + p.notes.top + '</span></div>' +
+                            '<div class="note-item"><span class="note-label">Middle:</span><span>' + p.notes.middle + '</span></div>' +
+                            '<div class="note-item"><span class="note-label">Base:</span><span>' + p.notes.base + '</span></div>' +
+                        '</div></div>' +
+                    '<div class="size-selector"><h4>Size</h4>' +
+                        '<div class="size-options">' +
+                            '<button class="size-btn active" data-size="50ml" data-extra="0">50ml</button>' +
+                            '<button class="size-btn" data-size="100ml" data-extra="15000">100ml (+&#8358;15,000)</button>' +
+                        '</div></div>' +
+                    '<div class="quantity-selector"><h4>Quantity</h4>' +
+                        '<div class="quantity-controls">' +
+                            '<button class="qty-btn" onclick="changeQty(-1)">&#8722;</button>' +
+                            '<span class="qty-display" id="modalQtyDisplay">1</span>' +
+                            '<button class="qty-btn" onclick="changeQty(1)">+</button>' +
+                        '</div></div>' +
+                    '<button class="add-to-cart-btn" onclick="addFromModal(' + p.id + ')">Add to Cart</button>' +
+                    '<button class="wishlist-btn">&#9825; Add to Wishlist</button>' +
+                '</div>';
+
+            /* size button toggle */
+            document.querySelectorAll('.size-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.size-btn').forEach(function(b){ b.classList.remove('active'); });
+                    this.classList.add('active');
+                });
+            });
+
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        function changeQty(delta) {
+            modalQty = Math.max(1, modalQty + delta);
+            document.getElementById('modalQtyDisplay').textContent = modalQty;
+        }
+
+        function quickAdd(id) {
+            var p = products.find(function(x){ return x.id === id; });
+            addToCart(p, '50ml', 0, 1);
+        }
+
+        function addFromModal(id) {
+            var p = products.find(function(x){ return x.id === id; });
+            var sizeBtn = document.querySelector('.size-btn.active');
+            var size  = sizeBtn.dataset.size;
+            var extra = parseInt(sizeBtn.dataset.extra) || 0;
+            addToCart(p, size, extra, modalQty);
+            closeModal();
+        }
+
+        /* ── CART ── */
+        function addToCart(product, size, extraPrice, qty) {
+            var totalPrice = product.price + extraPrice;
+            var existing = cart.find(function(i){ return i.id === product.id && i.size === size; });
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                cart.push({ id:product.id, name:product.name, price:totalPrice,
+                            image:product.image || '', emoji:product.emoji || '&#127873;',
+                            size:size, qty:qty });
+            }
+            updateCartUI();
+            showCart();
+            showToast('&#10003; ' + product.name + ' added to cart');
+        }
+
+        function showCart() {
+            document.getElementById('cartSidebar').classList.add('active');
+            document.getElementById('cartOverlay').classList.add('active');
+        }
+
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('active');
+            document.getElementById('cartOverlay').classList.toggle('active');
+        }
+
+        function updateCartUI() {
+            var cartItems = document.getElementById('cartItems');
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="cart-empty"><p>Your cart is empty</p><small>Add some fragrances to get started</small></div>';
+            } else {
+                cartItems.innerHTML = cart.map(function(item, i) {
+                    var imgEl = item.image ?
+                        '<img src="' + item.image + '" alt="' + item.name + '" onerror="this.style.display=\'none\'">' :
+                        item.emoji;
+                    return '<div class="cart-item">' +
+                        '<div class="cart-item-image">' + imgEl + '</div>' +
+                        '<div class="cart-item-details">' +
+                            '<h4>' + item.name + '</h4>' +
+                            '<div class="cart-item-size">' + item.size + '</div>' +
+                            '<div class="cart-item-footer">' +
+                                '<div class="cart-item-qty">' +
+                                    '<button class="cart-qty-btn" onclick="updateCartQty(' + i + ',-1)">&#8722;</button>' +
+                                    '<span>' + item.qty + '</span>' +
+                                    '<button class="cart-qty-btn" onclick="updateCartQty(' + i + ',1)">+</button>' +
+                                '</div>' +
+                                '<div class="cart-item-price">' + formatPrice(item.price * item.qty) + '</div>' +
+                            '</div>' +
+                            '<button class="cart-remove" onclick="removeFromCart(' + i + ')">Remove</button>' +
+                        '</div>' +
+                    '</div>';
+                }).join('');
+            }
+
+            var total = cart.reduce(function(s,i){ return s + i.price * i.qty; }, 0);
+            document.getElementById('cartTotal').innerHTML = formatPrice(total);
+
+            var count = cart.reduce(function(s,i){ return s + i.qty; }, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        function updateCartQty(index, delta) {
+            cart[index].qty = Math.max(1, cart[index].qty + delta);
+            updateCartUI();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        /* ── CHECKOUT ── */
+        function openCheckoutForm() {
+            if (cart.length === 0) { showToast('Your cart is empty!'); return; }
+
+            var items = document.getElementById('orderSummaryItems');
+            items.innerHTML = cart.map(function(item) {
+                return '<div class="summary-item">' +
+                    '<span>' + item.name + ' (' + item.size + ') &times;' + item.qty + '</span>' +
+                    '<span>' + formatPrice(item.price * item.qty) + '</span>' +
+                '</div>';
+            }).join('');
+
+            var total = cart.reduce(function(s,i){ return s + i.price * i.qty; }, 0);
+            document.getElementById('summaryTotal').innerHTML = formatPrice(total);
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        function closeCheckoutForm() {
+            document.getElementById('checkoutModal').classList.remove('active');
+        }
+
+        function submitOrder(e) {
+            e.preventDefault();
+            var name    = document.getElementById('customerName').value;
+            var phone   = document.getElementById('customerPhone').value;
+            var email   = document.getElementById('customerEmail').value;
+            var address = document.getElementById('customerAddress').value;
+            var city    = document.getElementById('customerCity').value;
+            var state   = document.getElementById('customerState').value;
+            var notes   = document.getElementById('specialInstructions').value;
+
+            var msg = '\uD83D\uDED2 *NEW ORDER \u2014 E&E Scents Perfumes*\n\n';
+            msg += '\uD83D\uDC64 *Customer Details:*\n';
+            msg += 'Name: ' + name + '\nPhone: ' + phone + '\n';
+            if (email) msg += 'Email: ' + email + '\n';
+            msg += '\n\uD83D\uDCCD *Delivery Address:*\n' + address + '\n' + city + ', ' + state + '\n';
+            if (notes) msg += '\n\u2139\uFE0F *Special Instructions:*\n' + notes + '\n';
+            msg += '\n\n\uD83D\uDED2 *Order Items:*\n';
+
+            cart.forEach(function(item, idx) {
+                msg += '\n' + (idx+1) + '. *' + item.name + '*\n';
+                msg += '   Size: ' + item.size + ' | Qty: ' + item.qty + ' | ' + '\u20A6' + Number(item.price * item.qty).toLocaleString() + '\n';
+            });
+
+            var total = cart.reduce(function(s,i){ return s + i.price * i.qty; }, 0);
+            msg += '\n\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n';
+            msg += '\uD83D\uDCB0 *TOTAL: \u20A6' + Number(total).toLocaleString() + '*\n';
+            msg += '\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\n\n';
+            msg += '\u2705 Please confirm my order and send payment details. Thank you! \uD83D\uDE4F';
+
+            window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+
+            closeCheckoutForm();
+            document.getElementById('cartSidebar').classList.remove('active');
+            document.getElementById('cartOverlay').classList.remove('active');
+            cart = [];
+            updateCartUI();
+            showToast('\uD83C\uDF89 Order sent! Check WhatsApp');
+        }
+
+        /* ── CLOSE ON BACKDROP CLICK ── */
+        document.getElementById('productModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        document.getElementById('checkoutModal').addEventListener('click', function(e) {
+            if (e.target === this) closeCheckoutForm();
+        });
+
+        /* ── INIT ── */
+        renderProducts();
+        updateCartUI();
+    </script>
+</body>
+</html>
