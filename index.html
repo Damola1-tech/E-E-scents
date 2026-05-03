@@ -2,98 +2,182 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E&E Scents Perfumes - Your Invisible Beauty Perfectly Scented</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>E&amp;E Scents Perfumes — Your Invisible Beauty Perfectly Scented</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --gold: #c9a96e;
+            --gold-light: #e8d5b0;
+            --dark: #1a1a1a;
+            --mid: #3a3a3a;
+            --cream: #faf8f4;
+            --warm-gray: #9a9080;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
+            font-family: 'Jost', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
         }
 
-        /* Header Navigation */
+        /* ── HEADER ── */
         header {
-            background: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 300;
+            background: rgba(250,248,244,0.97);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(201,169,110,0.2);
         }
 
         nav {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 2rem;
+            padding: 0 2.5rem;
+            height: 70px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-weight: bold;
-            font-size: 1.2rem;
+            gap: 0.6rem;
+            text-decoration: none;
+            color: var(--dark);
+            flex-shrink: 0;
         }
 
-        .logo-img {
-            height: 50px;
+        .logo img {
+            height: 42px;
             width: auto;
             object-fit: contain;
+            display: block;
+        }
+
+        /* Fallback if logo image missing */
+        .logo img[src=""] , .logo img:not([src]) {
+            display: none;
+        }
+
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            white-space: nowrap;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
-            transition: color 0.3s;
+            color: var(--mid);
+            font-size: 0.8rem;
             font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: #d4a574;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 1px;
+            background: var(--gold);
+            transition: width 0.3s;
         }
 
-        .nav-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::after { width: 100%; }
 
-        .cart-btn, .user-btn {
-            background: none;
-            border: 1px solid #333;
-            padding: 0.5rem 1rem;
+        .nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+
+        .cart-btn {
+            background: var(--dark);
+            color: #fff;
+            border: none;
+            padding: 0.55rem 1.3rem;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 3px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            transition: background 0.3s;
+            white-space: nowrap;
+        }
+
+        .cart-btn:hover { background: var(--gold); }
+
+        /* Hamburger – mobile only */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 6px 4px;
+            background: none;
+            border: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--dark);
+            border-radius: 2px;
             transition: all 0.3s;
         }
 
-        .cart-btn:hover, .user-btn:hover {
-            background: #333;
-            color: white;
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: var(--cream);
+            border-top: 1px solid rgba(201,169,110,0.15);
+            padding: 0 1.5rem;
         }
 
-        /* Hero Section */
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a {
+            text-decoration: none;
+            color: var(--mid);
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 1.1rem 0;
+            border-bottom: 1px solid rgba(201,169,110,0.12);
+            display: block;
+        }
+
+        .mobile-menu a:last-child { border-bottom: none; }
+
+        /* ── HERO SLIDESHOW ── */
         .hero {
             position: relative;
-            height: 500px;
-            background: 
-                linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-                url("images/hero.jpg") center/cover;
+            height: 92vh;
+            min-height: 500px;
+            max-height: 900px;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -101,559 +185,770 @@
             text-align: center;
         }
 
+        /* Each slide sits stacked, full size */
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.4s ease-in-out;
+            will-change: transform, opacity;
+        }
+
+        /* Dark overlay on every slide */
+        .hero-slide::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(10,8,6,0.28) 0%,
+                rgba(10,8,6,0.55) 100%
+            );
+        }
+
+        /* Active slide fades in */
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        /* ── KEN BURNS ANIMATIONS ──
+           Each slide gets a slightly different motion so it feels
+           varied and cinematic, not repetitive.                    */
+        .hero-slide.active.kb-zoom-in {
+            animation: kbZoomIn 7s ease-out forwards;
+        }
+        .hero-slide.active.kb-zoom-out {
+            animation: kbZoomOut 7s ease-out forwards;
+        }
+        .hero-slide.active.kb-pan-right {
+            animation: kbPanRight 7s ease-out forwards;
+        }
+        .hero-slide.active.kb-pan-left {
+            animation: kbPanLeft 7s ease-out forwards;
+        }
+
+        @keyframes kbZoomIn {
+            from { transform: scale(1.08) translate(0, 0); }
+            to   { transform: scale(1.0)  translate(0, 0); }
+        }
+        @keyframes kbZoomOut {
+            from { transform: scale(1.0)  translate(0, 0); }
+            to   { transform: scale(1.08) translate(0, 0); }
+        }
+        @keyframes kbPanRight {
+            from { transform: scale(1.06) translate(-2%, 0); }
+            to   { transform: scale(1.06) translate(2%, 0); }
+        }
+        @keyframes kbPanLeft {
+            from { transform: scale(1.06) translate(2%, 0); }
+            to   { transform: scale(1.06) translate(-2%, 0); }
+        }
+
+        /* Dot indicators */
+        .hero-dots {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.55rem;
+            z-index: 10;
+        }
+
+        .hero-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: background 0.3s, transform 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .hero-dot.active {
+            background: var(--gold-light);
+            transform: scale(1.35);
+        }
+
+        /* Arrow buttons */
+        .hero-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.28);
+            color: white;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            -webkit-tap-highlight-color: transparent;
+            backdrop-filter: blur(4px);
+        }
+
+        .hero-arrow:hover { background: rgba(255,255,255,0.25); }
+        .hero-arrow.prev { left: 1.5rem; }
+        .hero-arrow.next { right: 1.5rem; }
+
+        @media (max-width: 600px) {
+            .hero-arrow { display: none; }
+            .hero-dots { bottom: 1.2rem; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            max-width: 700px;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        /* Text fade-in when slide activates */
+        .hero-content-inner {
+            animation: heroTextIn 1.2s ease forwards;
+        }
+
+        @keyframes heroTextIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-eyebrow {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 1.25rem;
+            display: block;
+        }
+
         .hero-content h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 6vw, 4.5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.02em;
         }
 
         .hero-content p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-size: clamp(0.88rem, 2vw, 1.05rem);
+            font-weight: 300;
+            letter-spacing: 0.14em;
+            margin-bottom: 2.5rem;
+            color: rgba(255,255,255,0.82);
         }
 
         .shop-btn {
-            background: white;
-            color: #333;
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1rem;
+            background: transparent;
+            color: white;
+            padding: 0.9rem 2.8rem;
+            border: 1px solid rgba(255,255,255,0.65);
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
             text-decoration: none;
             display: inline-block;
+            transition: all 0.35s;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .shop-btn:hover {
-            background: #d4a574;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        .shop-btn:hover,
+        .shop-btn:active {
+            background: white;
+            color: var(--dark);
+            border-color: white;
         }
 
-        /* Featured Scents Section */
+        /* ── FEATURED ── */
         .featured {
-            max-width: 1200px;
-            margin: 4rem auto;
+            max-width: 1300px;
+            margin: 5rem auto;
             padding: 0 2rem;
         }
 
-        .featured h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            font-weight: bold;
+        .section-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.6rem;
+            display: block;
         }
 
-        /* Products Grid - 3 columns, 4th product spans full width */
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 2.5rem;
+        }
+
         .products-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .product-card {
-            border-radius: 10px;
+            border-radius: 3px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
             background: white;
-        }
-
-        /* Make 4th product span full width */
-        .product-card:nth-child(4) {
-            grid-column: 1 / -1;
-        }
-
-        /* Taller image for 4th product */
-        .product-card:nth-child(4) .product-image {
-            height: 400px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+            transition: transform 0.35s, box-shadow 0.35s;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: translateY(-7px);
+            box-shadow: 0 14px 36px rgba(0,0,0,0.11);
         }
+
+        /* 4th card full-width on desktop */
+        .product-card:nth-child(4) { grid-column: 1 / -1; }
+        .product-card:nth-child(4) .product-image { height: 420px; }
 
         .product-image {
             width: 100%;
             height: 300px;
-            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+            background: linear-gradient(135deg, #f2ede7, #e0d8cc);
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 4rem;
-            overflow: hidden;
-            position: relative;
         }
 
         .product-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
+            transition: transform 0.5s;
         }
 
-        .product-info {
-            padding: 1.5rem;
-            background: white;
-        }
+        .product-card:hover .product-image img { transform: scale(1.05); }
+
+        .product-info { padding: 1.3rem 1.4rem 1.5rem; }
 
         .badge {
             display: inline-block;
-            background: #d4a574;
+            background: var(--dark);
             color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 0.5rem;
+            padding: 0.22rem 0.65rem;
+            border-radius: 2px;
+            font-size: 0.66rem;
+            font-weight: 600;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            margin-bottom: 0.45rem;
         }
 
         .product-info h3 {
-            margin: 0.5rem 0;
-            font-size: 1.3rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
             font-weight: 600;
+            margin-bottom: 0.25rem;
+            line-height: 1.3;
         }
 
         .price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
-            margin-top: 0.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
         }
 
-        /* Story Section */
+        /* ── STORY ── */
         .story {
-            background: #f9f9f9;
-            padding: 4rem 2rem;
+            background: var(--dark);
+            color: white;
+            padding: 6rem 2rem;
         }
 
         .story-content {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 5rem;
             align-items: center;
         }
 
-        .story h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: bold;
-        }
+        .story .section-label { color: var(--gold-light); }
+        .story .section-title { color: white; }
 
         .story-text p {
+            color: rgba(255,255,255,0.58);
+            line-height: 1.9;
             margin-bottom: 1rem;
-            color: #666;
-            line-height: 1.8;
+            font-size: 0.94rem;
+            font-weight: 300;
         }
 
-        .story-features {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
+        .story-features { display: flex; flex-direction: column; gap: 2.5rem; }
 
-        .feature {
-            display: flex;
-            gap: 1.5rem;
-            align-items: start;
-        }
+        .feature { display: flex; gap: 1.4rem; align-items: flex-start; }
 
         .feature-icon {
-            width: 60px;
-            height: 60px;
-            background: #333;
-            border-radius: 5px;
+            width: 58px;
+            height: 58px;
+            border: 1px solid rgba(201,169,110,0.3);
+            border-radius: 3px;
             flex-shrink: 0;
             overflow: hidden;
+            background: rgba(255,255,255,0.05);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .feature-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .feature-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
         .feature h3 {
-            margin-bottom: 0.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.18rem;
             font-weight: 600;
+            color: white;
+            margin-bottom: 0.35rem;
         }
 
-        .feature p {
-            color: #666;
-            font-size: 0.95rem;
-        }
+        .feature p { color: rgba(255,255,255,0.52); font-size: 0.86rem; line-height: 1.75; font-weight: 300; }
 
-        /* Testimonials */
+        /* ── TESTIMONIALS ── */
         .testimonials {
-            max-width: 1200px;
-            margin: 4rem auto;
+            max-width: 1300px;
+            margin: 5rem auto;
             padding: 0 2rem;
-        }
-
-        .testimonials h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-weight: bold;
-        }
-
-        .testimonials > p {
-            text-align: center;
-            color: #666;
-            margin-bottom: 3rem;
         }
 
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
         }
 
         .testimonial-card {
             background: white;
             padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 3px;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.07);
         }
 
         .testimonial-header {
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
         }
 
         .avatar {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #d4a574, #8b6f47);
+            width: 46px; height: 46px;
             border-radius: 50%;
             overflow: hidden;
+            background: linear-gradient(135deg, var(--gold), #8b6f47);
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .testimonial-header strong { font-weight: 600; display: block; margin-bottom: 0.12rem; font-size: 0.95rem; }
+
+        .stars { color: #c9a030; font-size: 0.85rem; }
+
+        .testimonial-card > p {
+            color: var(--warm-gray);
+            font-size: 0.9rem;
+            line-height: 1.75;
+            font-weight: 300;
+            font-style: italic;
         }
 
-        .stars {
-            color: #ffd700;
-            font-size: 1.2rem;
-        }
+        /* ── BLOG ── */
+        .blog { background: var(--dark); padding: 5rem 2rem; }
 
-        /* Blog Section */
-        .blog {
-            background: #f9f9f9;
-            padding: 4rem 2rem;
-        }
+        .blog-content { max-width: 1300px; margin: 0 auto; }
 
-        .blog-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .blog h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-weight: bold;
-        }
-
-        .blog > p {
-            text-align: center;
-            color: #666;
-            margin-bottom: 3rem;
-        }
+        .blog .section-label { color: var(--gold-light); }
+        .blog .section-title { color: white; }
 
         .blog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2.5rem;
         }
 
         .blog-card {
-            background: white;
-            border-radius: 10px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 3px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            transition: transform 0.3s, border-color 0.3s;
         }
 
-        .blog-card:hover {
-            transform: translateY(-5px);
-        }
+        .blog-card:hover { transform: translateY(-5px); border-color: rgba(201,169,110,0.3); }
 
-        .blog-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #555, #333);
-            overflow: hidden;
-        }
+        .blog-image { width: 100%; height: 210px; overflow: hidden; }
 
-        .blog-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .blog-image img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
 
-        .blog-info {
-            padding: 1.5rem;
-        }
+        .blog-card:hover .blog-image img { transform: scale(1.05); }
+
+        .blog-info { padding: 1.4rem; }
 
         .blog-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: white;
             margin-bottom: 1rem;
+            line-height: 1.45;
         }
 
-        .blog-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
+        .blog-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
         .tag {
-            background: #f0f0f0;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            color: #666;
+            background: rgba(201,169,110,0.1);
+            border: 1px solid rgba(201,169,110,0.22);
+            color: var(--gold-light);
+            padding: 0.22rem 0.7rem;
+            border-radius: 2px;
+            font-size: 0.73rem;
+            letter-spacing: 0.05em;
         }
 
-        /* Newsletter */
+        /* ── NEWSLETTER ── */
         .newsletter {
-            max-width: 1200px;
-            margin: 4rem auto;
+            max-width: 1300px;
+            margin: 5rem auto;
             padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
         }
 
-        .newsletter h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            font-weight: bold;
-        }
+        .newsletter .section-title { margin-bottom: 0.5rem; }
+        .newsletter .section-desc { color: var(--warm-gray); font-size: 0.9rem; font-weight: 300; }
 
-        .newsletter p {
-            color: #666;
-            margin-bottom: 2rem;
-        }
-
-        .newsletter-form {
-            display: flex;
-            gap: 1rem;
-            max-width: 500px;
-        }
+        .newsletter-form { display: flex; gap: 0.7rem; }
 
         .newsletter-form input {
             flex: 1;
-            padding: 1rem;
+            padding: 0.85rem 1.1rem;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.88rem;
+            background: white;
+            transition: border-color 0.2s;
+            min-width: 0;
         }
+
+        .newsletter-form input:focus { outline: none; border-color: var(--gold); }
 
         .subscribe-btn {
-            background: #333;
+            background: var(--dark);
             color: white;
-            padding: 1rem 2rem;
+            padding: 0.85rem 1.6rem;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s;
+            border-radius: 2px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.78rem;
             font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
-        .subscribe-btn:hover {
-            background: #d4a574;
+        .subscribe-btn:hover { background: var(--gold); }
+
+        .newsletter-success {
+            display: none;
+            background: #f0f7f0;
+            border: 1px solid #c3dfc3;
+            color: #3a6a3a;
+            padding: 0.85rem 1.1rem;
+            border-radius: 2px;
+            font-size: 0.88rem;
         }
 
-        /* Footer */
+        /* ── FOOTER ── */
         footer {
-            background: #333;
-            color: white;
-            padding: 2rem;
-            text-align: center;
+            background: var(--dark);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 2.5rem 2rem;
         }
 
         .footer-content {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .footer-logo { display: flex; align-items: center; gap: 0.65rem; color: white; }
+
+        .footer-logo img {
+            height: 34px;
+            width: auto;
+            object-fit: contain;
+            display: block;
         }
 
-        .footer-links {
-            display: flex;
-            gap: 2rem;
+        .footer-logo span {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
         }
+
+        .footer-links { display: flex; gap: 1.8rem; flex-wrap: wrap; }
 
         .footer-links a {
-            color: white;
+            color: rgba(255,255,255,0.48);
             text-decoration: none;
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
             transition: color 0.3s;
         }
 
-        .footer-links a:hover {
-            color: #d4a574;
+        .footer-links a:hover { color: var(--gold); }
+
+        .footer-copy { color: rgba(255,255,255,0.35); font-size: 0.76rem; }
+
+        /* ═══════════════════════════════
+           RESPONSIVE — TABLET 900px
+        ═══════════════════════════════ */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+
+            .story-content { grid-template-columns: 1fr; gap: 3rem; }
+
+            .newsletter {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
+        /* ═══════════════════════════════
+           RESPONSIVE — MOBILE 600px
+        ═══════════════════════════════ */
+        @media (max-width: 600px) {
+            nav { padding: 0 1.2rem; height: 60px; }
 
-            .hero {
-                height: 400px;
-            }
+            .logo img { height: 34px; }
+            .logo-text { font-size: 1rem; }
 
-            .hero-content h1 {
-                font-size: 2rem;
-            }
+            .cart-btn { padding: 0.45rem 0.9rem; font-size: 0.75rem; }
 
-            .hero-content p {
-                font-size: 1rem;
-            }
+            .hero { height: 80vh; min-height: 420px; }
 
-            .story-content {
-                grid-template-columns: 1fr;
-            }
+            .hero-content h1 { margin-bottom: 0.9rem; }
+            .hero-content p { margin-bottom: 2rem; }
 
-            .newsletter-form {
-                flex-direction: column;
-            }
+            .shop-btn { padding: 0.8rem 2rem; font-size: 0.72rem; }
 
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
+            .featured { margin: 3.5rem auto; padding: 0 1.2rem; }
 
-            /* Mobile: Show 4 products in 2x2 grid, all equal size */
+            /* 2-column grid on mobile, ALL equal */
             .products-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
+                gap: 0.9rem;
             }
 
-            /* Reset 4th product to normal size on mobile */
-            .product-card:nth-child(4) {
-                grid-column: auto;
-            }
+            /* reset 4th card back to normal on mobile */
+            .product-card:nth-child(4) { grid-column: auto; }
+            .product-card:nth-child(4) .product-image { height: 160px; }
 
-            .product-card:nth-child(4) .product-image {
-                height: 200px;
-            }
+            .product-image { height: 160px; font-size: 2.5rem; }
 
-            .product-image {
-                height: 200px;
-                font-size: 2.5rem;
-            }
+            .product-info { padding: 0.85rem 0.9rem 1rem; }
+
+            .badge { font-size: 0.6rem; padding: 0.18rem 0.5rem; }
+
+            .product-info h3 { font-size: 0.92rem; }
+
+            .price { font-size: 1rem; }
+
+            .story { padding: 4rem 1.2rem; }
+
+            .testimonials { padding: 0 1.2rem; margin: 3.5rem auto; }
+
+            .blog { padding: 3.5rem 1.2rem; }
+
+            .newsletter { padding: 0 1.2rem; margin: 3.5rem auto; }
+
+            .newsletter-form { flex-direction: column; gap: 0.6rem; }
+
+            .subscribe-btn { width: 100%; padding: 0.85rem; }
+
+            footer { padding: 2rem 1.2rem; }
+
+            .footer-content { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+
+            .footer-links { gap: 1.2rem; }
+        }
+
+        /* Very small phones */
+        @media (max-width: 380px) {
+            .products-grid { gap: 0.6rem; }
+            .product-image { height: 135px; }
+            .product-info h3 { font-size: 0.82rem; }
+            .price { font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+
     <header>
         <nav>
-            <div class="logo">
-                <img src='images/E&E SCENTS 2.png' alt="E&E Scents Logo" class="logo-img">
-                <span>E&E SCENTS</span>
-            </div>
+            <a href="index.html" class="logo">
+                <img src="images/E&E SCENTS 2.png" alt="E&amp;E Scents"
+                     onerror="this.style.display='none'">
+                <span class="logo-text">E&amp;E SCENTS</span>
+            </a>
             <ul class="nav-links">
-                <li><a href="shop .html">Shop</a></li>
+                <li><a href="shop.html">Shop</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="cart-btn" onclick="window.location.href='shop .html'">🛒 Cart</button>
-                <button class="user-btn">👤</button>
+                <button class="cart-btn" onclick="window.location.href='shop.html'">🛒 Cart</button>
+                <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </nav>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="shop.html" onclick="closeMenu()">Shop</a>
+            <a href="#about" onclick="closeMenu()">About Us</a>
+            <a href="#contact" onclick="closeMenu()">Contact</a>
+        </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Hero Slideshow -->
+    <section class="hero" id="heroSection">
+
+        <!-- Slide 1 -->
+        <div class="hero-slide active kb-zoom-in"
+             style="background-image: url('images/hero.jpg');"></div>
+
+        <!-- Slide 2 — uses your product image as a hero background -->
+        <div class="hero-slide kb-pan-right"
+             style="background-image: url('images/spraying tomford.jpg');"></div>
+
+        <!-- Slide 3 -->
+        <div class="hero-slide kb-zoom-out"
+             style="background-image: url('images/Armaf Club De Nuit Intense Man (2).jpg');"></div>
+
+        <!-- Slide 4 -->
+        <div class="hero-slide kb-pan-left"
+             style="background-image: url('images/Yara.jpg');"></div>
+
+        <!-- Arrow controls -->
+        <button class="hero-arrow prev" onclick="heroNav(-1)" aria-label="Previous">&#8592;</button>
+        <button class="hero-arrow next" onclick="heroNav(1)"  aria-label="Next">&#8594;</button>
+
+        <!-- Dot indicators -->
+        <div class="hero-dots" id="heroDots"></div>
+
+        <!-- Content (always on top) -->
         <div class="hero-content">
-            <div>
-                <h1>E&E Scents Perfumes</h1>
-                <p>Your Invisible Beauty Perfectly Scented.</p>
-                <a href="shop .html" class="shop-btn">Shop Now</a>
+            <div class="hero-content-inner" id="heroTextInner">
+                <span class="hero-eyebrow">Luxury Fragrances</span>
+                <h1>E&amp;E Scents Perfumes</h1>
+                <p>Your Invisible Beauty, Perfectly Scented.</p>
+                <a href="shop.html" class="shop-btn">Explore Collection</a>
             </div>
         </div>
+
     </section>
 
-    <!-- Featured Scents -->
+    <!-- Featured -->
     <section class="featured" id="shop">
-        <h2>Featured Scents</h2>
+        <span class="section-label">Curated For You</span>
+        <h2 class="section-title">Featured Scents</h2>
         <div class="products-grid">
-            <!-- Product 1 -->
-            <div class="product-card" onclick="window.location.href='shop .html'">
+
+            <div class="product-card" onclick="window.location.href='shop.html'">
                 <div class="product-image">
-                    <img src='images/Lattafa Asad.jpg' alt="Lattafa Asad">
+                    <img src="images/Lattafa Asad.jpg" alt="Lattafa Asad"
+                         onerror="this.style.display='none'">
                 </div>
                 <div class="product-info">
                     <span class="badge">Best Seller</span>
                     <h3>Lattafa Asad</h3>
-                    <p class="price">₦45,000</p>
+                    <p class="price">&#8358;45,000</p>
                 </div>
             </div>
 
-            <!-- Product 2 -->
-            <div class="product-card" onclick="window.location.href='shop .html'">
+            <div class="product-card" onclick="window.location.href='shop.html'">
                 <div class="product-image">
-                    <img src="images/Lattafa Khamrah Qahwa.jpg" alt="Lattafa Khamrah Qahwa">
+                    <img src="images/Lattafa Khamrah Qahwa.jpg" alt="Lattafa Khamrah Qahwa"
+                         onerror="this.style.display='none'">
                 </div>
                 <div class="product-info">
                     <span class="badge">Limited Edition</span>
                     <h3>Lattafa Khamrah Qahwa</h3>
-                    <p class="price">₦65,000</p>
+                    <p class="price">&#8358;65,000</p>
                 </div>
             </div>
 
-            <!-- Product 3 -->
-            <div class="product-card" onclick="window.location.href='shop .html'">
+            <div class="product-card" onclick="window.location.href='shop.html'">
                 <div class="product-image">
-                    <img src="images/Afnan 9PM.jpg" alt="Afnan 9PM">
+                    <img src="images/Afnan 9PM.jpg" alt="Afnan 9PM"
+                         onerror="this.style.display='none'">
                 </div>
                 <div class="product-info">
                     <span class="badge">New</span>
                     <h3>Afnan 9PM</h3>
-                    <p class="price">₦48,000</p>
+                    <p class="price">&#8358;48,000</p>
                 </div>
             </div>
 
-            <!-- Product 4 - FULL WIDTH -->
-            <div class="product-card" onclick="window.location.href='shop .html'">
+            <!-- 4th product — full width on desktop -->
+            <div class="product-card" onclick="window.location.href='shop.html'">
                 <div class="product-image">
-                    <img src="images/spraying tomford.jpg" alt="Tom Ford Black Orchid Eau de Parfum">
+                    <img src="images/spraying tomford.jpg" alt="Tom Ford Black Orchid"
+                         onerror="this.style.display='none'">
                 </div>
                 <div class="product-info">
                     <span class="badge">Best Seller</span>
                     <h3>Tom Ford Black Orchid Eau de Parfum</h3>
-                    <p class="price">₦249,000</p>
+                    <p class="price">&#8358;249,000</p>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -661,31 +956,30 @@
     <section class="story" id="about">
         <div class="story-content">
             <div class="story-text">
-                <h2>Our Story</h2>
-                <p>E&E Scents is dedicated to creating unique and luxurious perfumes sourced from the finest ingredients.</p>
-                <p>Each fragrance tells a story, crafted with passion and artistry to bring out your invisible beauty.</p>
+                <span class="section-label">Our Story</span>
+                <h2 class="section-title">Crafted With Passion</h2>
+                <p>E&amp;E Scents is dedicated to curating unique and luxurious perfumes sourced from the finest fragrance houses around the world.</p>
+                <p>Each fragrance tells a story, crafted with passion and artistry to bring out your invisible beauty, the scent that lingers long after you leave the room.</p>
             </div>
             <div class="story-features">
-                <!-- Feature 1 - ADD IMAGE HERE -->
                 <div class="feature">
                     <div class="feature-icon">
-                        <!-- TO ADD IMAGE: Uncomment and add path -->
-                        <img src="images/perfume word.jpg" alt="Craftsmanship">
+                        <img src="images/perfume word.jpg" alt="Craftsmanship"
+                             onerror="this.style.display='none'">
                     </div>
                     <div>
                         <h3>Craftsmanship at Its Finest</h3>
-                        <p>Each E&E Scents perfume is crafted with love and passion, blending unique scents for an extraordinary experience.</p>
+                        <p>Every E&amp;E Scents perfume is selected with love and precision, blending unique scents for an extraordinary, lasting experience.</p>
                     </div>
                 </div>
-                <!-- Feature 2 - ADD IMAGE HERE -->
                 <div class="feature">
                     <div class="feature-icon">
-                        <!-- TO ADD IMAGE: Uncomment and add path -->
-                      <img src="images/i serve.png" alt="Sustainability"> 
+                        <img src="images/i serve.png" alt="Sustainability"
+                             onerror="this.style.display='none'">
                     </div>
                     <div>
                         <h3>Sustainability</h3>
-                        <p>We prioritize sustainability in our sourcing and production processes to protect nature.</p>
+                        <p>We prioritize sustainability in our sourcing and production processes, beautiful scents, responsibly delivered.</p>
                     </div>
                 </div>
             </div>
@@ -694,65 +988,65 @@
 
     <!-- Testimonials -->
     <section class="testimonials">
-        <h2>What Our Customers Say</h2>
-        <p>Hear from our esteemed clients about their E&E Scents experience.</p>
+        <span class="section-label">Customer Love</span>
+        <h2 class="section-title">What Our Customers Say</h2>
         <div class="testimonials-grid">
-            <!-- Testimonial 1 - ADD IMAGE HERE -->
             <div class="testimonial-card">
                 <div class="testimonial-header">
                     <div class="avatar">
-                        <!-- TO ADD IMAGE: Uncomment and add path -->
-                      <img src="images/avatar sophia.jpg" alt="Sophia">
+                        <img src="images/avatar sophia.jpg" alt="Sophia"
+                             onerror="this.style.display='none'">
                     </div>
                     <div>
                         <strong>Sophia</strong>
-                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                     </div>
                 </div>
-                <p>Absolutely exquisite! The scents linger beautifully.</p>
+                <p>"Absolutely exquisite! The scents linger beautifully all day. I get compliments everywhere I go."</p>
             </div>
-            <!-- Testimonial 2 - ADD IMAGE HERE -->
             <div class="testimonial-card">
                 <div class="testimonial-header">
                     <div class="avatar">
-                        <!-- TO ADD IMAGE: Uncomment and add path -->
-                      <img src="images/avaar liam.jpg" alt="Liam">
+                        <img src="images/avaar liam.jpg" alt="Liam"
+                             onerror="this.style.display='none'">
                     </div>
                     <div>
                         <strong>Liam</strong>
-                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                     </div>
                 </div>
-                <p>A true luxury experience! I gift E&E to friends often.</p>
+                <p>"A true luxury experience! I've already gifted E&amp;E fragrances to three friends, they were blown away."</p>
             </div>
         </div>
     </section>
 
-    <!-- Blog Section -->
+    <!-- Blog -->
     <section class="blog">
         <div class="blog-content">
-            <h2>Explore Our Latest Posts</h2>
-            <p>Join our community and share your fragrance journey.</p>
+            <span class="section-label">From The Community</span>
+            <h2 class="section-title">Latest Posts</h2>
             <div class="blog-grid">
                 <div class="blog-card">
                     <div class="blog-image">
-                        <img src="images/unboxing.jpg" alt="Blog post">
+                        <img src="images/unboxing.jpg" alt="Unboxing post"
+                             onerror="this.style.display='none'">
                     </div>
                     <div class="blog-info">
-                        <h3>Unboxing my new favorite E&E fragrance</h3>
+                        <h3>Unboxing my new favorite scents from E&amp;E fragrance</h3>
                         <div class="blog-tags">
                             <span class="tag">#Unboxing</span>
                             <span class="tag">#Fragrance</span>
-                            <span class="tag">@E&E_Fans</span>
+                            <span class="tag">@E&amp;E_Fans</span>
                         </div>
                     </div>
                 </div>
                 <div class="blog-card">
                     <div class="blog-image">
-                        <img src="images/cant get enough of.jpg" alt="Blog post"> 
+                        <img src="images/cant get enough of.jpg" alt="Blog post"
+                             onerror="this.style.display='none'">
                     </div>
                     <div class="blog-info">
-                        <h3>Can't get enough of these beautiful scents! 🌸 #PerfumeAddict</h3>
+                        <h3>Can't get enough of these beautiful scents! &#127800; #PerfumeAddict</h3>
                         <div class="blog-tags">
                             <span class="tag">#Collections</span>
                             <span class="tag">#Perfect</span>
@@ -766,50 +1060,151 @@
 
     <!-- Newsletter -->
     <section class="newsletter" id="contact">
-        <h2>Join Our Newsletter</h2>
-        <p>Stay updated with the latest in luxury fragrances.</p>
-        <form class="newsletter-form" onsubmit="return handleSubscribe(event)">
-            <input type="email" placeholder="Enter your email" required>
-            <button type="submit" class="subscribe-btn">Subscribe</button>
-        </form>
+        <div>
+            <span class="section-label">Stay In The Know</span>
+            <h2 class="section-title">Join Our Newsletter</h2>
+            <p class="section-desc">New arrivals, exclusive deals, and the latest in luxury fragrances, straight to your inbox.</p>
+        </div>
+        <div>
+            <form class="newsletter-form" id="newsletterForm" onsubmit="handleSubscribe(event)">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit" class="subscribe-btn">Subscribe</button>
+            </form>
+            <div class="newsletter-success" id="newsletterSuccess">
+                &#10003; Thank you for subscribing! Welcome to E&amp;E Scents.
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
-                <img src='images/E&E SCENTS 2.png' alt="E&E Scents Logo" class="logo-img">
-                <span>E&E SCENTS</span>
+                <img src="images/E&E SCENTS 2.png" alt="E&amp;E Scents"
+                     onerror="this.style.display='none'">
+                <span>E&amp;E SCENTS</span>
             </div>
             <div class="footer-links">
-                <a href="#instagram">Follow Us on Instagram</a>
+                <a href="https://www.instagram.com/e_e_scents" target="_blank" rel="noopener noreferrer">Instagram</a>
+                <a href="shop.html">Shop</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
                 <a href="#privacy">Privacy Policy</a>
             </div>
-            <div>© 2026 E&E Scents Perfumes</div>
+            <div class="footer-copy">&#169; 2026 E&amp;E Scents Perfumes. All rights reserved.</div>
         </div>
     </footer>
 
     <script>
-        function handleSubscribe(e) {
-            e.preventDefault();
-            const email = e.target.querySelector('input').value;
-            alert(`Thank you for subscribing with: ${email}`);
-            e.target.reset();
-            return false;
+        /* ── MOBILE MENU ── */
+        function toggleMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+        }
+        function closeMenu() {
+            document.getElementById('mobileMenu').classList.remove('open');
         }
 
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+        /* close on outside tap */
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobileMenu');
+            const btn  = document.querySelector('.hamburger');
+            if (menu.classList.contains('open') &&
+                !menu.contains(e.target) && !btn.contains(e.target)) {
+                menu.classList.remove('open');
+            }
+        });
+
+        /* ── NEWSLETTER ── */
+        function handleSubscribe(e) {
+            e.preventDefault();
+            document.getElementById('newsletterForm').style.display = 'none';
+            document.getElementById('newsletterSuccess').style.display = 'block';
+        }
+
+        /* ── HERO SLIDESHOW + KEN BURNS ── */
+        (function() {
+            var slides     = document.querySelectorAll('.hero-slide');
+            var dotsWrap   = document.getElementById('heroDots');
+            var textInner  = document.getElementById('heroTextInner');
+            var current    = 0;
+            var total      = slides.length;
+            var timer      = null;
+            var INTERVAL   = 5500; // ms between slides
+
+            // Ken Burns classes — one per slide, cycles if fewer than slides
+            var kbClasses = ['kb-zoom-in', 'kb-pan-right', 'kb-zoom-out', 'kb-pan-left'];
+
+            // Build dots
+            for (var i = 0; i < total; i++) {
+                var dot = document.createElement('button');
+                dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+                dot.dataset.index = i;
+                dot.addEventListener('click', function() {
+                    goTo(parseInt(this.dataset.index));
+                    resetTimer();
+                });
+                dotsWrap.appendChild(dot);
+            }
+
+            function goTo(index) {
+                var dots = dotsWrap.querySelectorAll('.hero-dot');
+
+                // Remove active + KB class from current slide
+                slides[current].classList.remove('active');
+                slides[current].classList.remove(kbClasses[current % kbClasses.length]);
+                dots[current].classList.remove('active');
+
+                current = (index + total) % total;
+
+                // Add active + fresh KB class to new slide
+                var newKB = kbClasses[current % kbClasses.length];
+                slides[current].classList.remove(newKB); // force reflow
+                void slides[current].offsetWidth;        // trigger reflow
+                slides[current].classList.add(newKB);
+                slides[current].classList.add('active');
+                dots[current].classList.add('active');
+
+                // Re-trigger text animation
+                textInner.style.animation = 'none';
+                void textInner.offsetWidth;
+                textInner.style.animation = '';
+            }
+
+            function next() { goTo(current + 1); }
+
+            function resetTimer() {
+                clearInterval(timer);
+                timer = setInterval(next, INTERVAL);
+            }
+
+            // Expose arrow function to global scope
+            window.heroNav = function(dir) {
+                goTo(current + dir);
+                resetTimer();
+            };
+
+            // Pause on hover (desktop only)
+            var section = document.getElementById('heroSection');
+            section.addEventListener('mouseenter', function() { clearInterval(timer); });
+            section.addEventListener('mouseleave', resetTimer);
+
+            // Start
+            resetTimer();
+        })();
+
+        /* ── SMOOTH SCROLL for anchor links ── */
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                var href = this.getAttribute('href');
+                if (href === '#' || href === '#instagram' || href === '#privacy') return;
+                var target = document.querySelector(href);
                 if (target) {
+                    e.preventDefault();
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
     </script>
 </body>
-
 </html>
-
