@@ -486,6 +486,57 @@
 
         .size-btn:hover, .size-btn.active { background: var(--dark); border-color: var(--dark); color: white; }
 
+        /* Single size tag — shown when product has only one size */
+        .single-size-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--cream);
+            border: 1px solid rgba(201,169,110,0.3);
+            border-radius: 2px;
+            padding: 0.5rem 1rem;
+        }
+
+        .single-size-tag .sz-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--mid);
+        }
+
+        .single-size-tag .sz-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        /* size button inner layout */
+        .size-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.18rem;
+            min-width: 90px;
+        }
+
+        .sz-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+        }
+
+        .sz-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        .size-btn.active .sz-price,
+        .size-btn:hover .sz-price {
+            color: var(--gold-light);
+        }
+
         .quantity-controls { display: flex; align-items: center; gap: 1rem; }
 
         .qty-btn {
@@ -967,7 +1018,7 @@
     <div class="shop-container">
         <div class="shop-header">
             <h1>Our Collection</h1>
-            <p>Discover your signature scent from our luxurious collection</p>
+            <p>Top perfume brands, handpicked and available for you right here</p>
         </div>
 
         <div class="filter-section">
@@ -1094,25 +1145,170 @@
         /* ── CONFIG ── */
         const WHATSAPP_NUMBER = '2349135688583';
 
-        /* ── PRODUCTS (clean, no duplicates, unique IDs) ── */
-        const products = [
-            { id:1,  name:'Lattafa Asad',                   category:'men',    price:45000, badge:'Best Seller', image:'images/Lattafa Asad.jpg',                          emoji:'&#127794;', description:'A rich, oriental fragrance with vanilla and spices.',                                               notes:{top:'Pineapple, Vanilla', middle:'Black Pepper, Tobacco', base:'Coffee, Dry Woods'} },
-            { id:2,  name:'Afnan 9PM',                      category:'unisex', price:48000, badge:'Best Seller', image:'images/Afnan 9PM.jpg',                             emoji:'&#127801;', description:'Sweet spicy fragrance with fresh apple and warm vanilla.',                                        notes:{top:'Apple, Bergamot', middle:'Cinnamon, Lavender', base:'Vanilla, Orange'} },
-            { id:3,  name:'Lattafa Khamrah Qahwa',          category:'unisex', price:65000, badge:'New',         image:'images/Lattafa Khamrah Qahwa.jpg',                  emoji:'&#9749;',   description:'Rich coffee fragrance with vanilla and cinnamon.',                                                notes:{top:'Cinnamon, Coffee', middle:'Cardamom, Vanilla', base:'Musk, Amber'} },
-            { id:4,  name:'Lattafa Oud for Glory',          category:'unisex', price:62000, badge:'Limited',     image:'images/Lattafa Oud for Glory.jpg',                  emoji:'&#128293;', description:'A rich, smoky oud with warm spices, dark woods and a bold luxurious presence.',                 notes:{top:'Saffron, Nutmeg, Lavender', middle:'Rich Oud', base:'Patchouli, Musk'} },
-            { id:5,  name:'Armaf Club De Nuit Intense Man', category:'men',    price:55000, badge:'Best Seller', image:'images/Armaf Club De Nuit Intense Man (2).jpg',     emoji:'&#127769;', description:'Intense and mysterious with smoky birch and spicy undertones.',                                  notes:{top:'Lemon, Pineapple, Nutmeg', middle:'Rose, Birch, Jasmine', base:'Patchouli, Vanilla, Musk, Ambergris'} },
-            { id:6,  name:'Lattafa Najdia',                 category:'men',    price:28000, badge:'Best Seller', image:'images/Lattafa Najdia.jpg',                         emoji:'&#127774;', description:'Fresh, citrusy aquatic with subtle woody warmth — great everyday value.',                        notes:{top:'Bergamot, Lemon', middle:'Cardamom, Lavender', base:'Amber, Musk'} },
-            { id:7,  name:'Maison Alhambra Jean Lowe Noir', category:'men',    price:58000, badge:'New',         image:'images/Maison Alhambra Jean Lowe Noir.jpg',          emoji:'&#127794;', description:'Bold incense and oud-forward scent with warm ginger and jasmine.',                               notes:{top:'Incense, Oud', middle:'Ginger, Jasmine, Nutmeg', base:'Mint, Pink Pepper, Pomelo'} },
-            { id:8,  name:'Maison Alhambra Porto Neroli',   category:'unisex', price:35000, badge:'',            image:'images/Maison Alhambra Porto Neroli.jpg',            emoji:'&#127826;', description:'Sun-drenched citrus fragrance with neroli and a gentle amber finish.',                           notes:{top:'Mandarin, Neroli, Lemon', middle:'Orange Blossom, Lavender, Sea Salt', base:'Amber, Wormwood'} },
-            { id:9,  name:'Yara',                           category:'women',  price:48000, badge:'Best Seller', image:'images/Yara.jpg',                                   emoji:'&#128139;', description:'Sweet, creamy floral scent with a soft feminine touch.',                                         notes:{top:'Orchid, Heliotrope', middle:'Vanilla, Tropical Fruits', base:'Musk, Sandalwood'} },
-            { id:10, name:'Fakhar Rose',                    category:'women',  price:38500, badge:'New',         image:'images/Fakhar Rose.jpg',                            emoji:'&#127800;', description:'Elegant rose fragrance with a modern sweet twist.',                                              notes:{top:'Fruits, Lily', middle:'Rose, Jasmine', base:'Vanilla, White Musk'} },
-            { id:11, name:'Oud Mood',                       category:'unisex', price:42000, badge:'',            image:'images/Oud Mood.jpg',                               emoji:'&#128293;', description:'Rich oriental oud blended with warm spices and caramel.',                                        notes:{top:'Saffron, Rose', middle:'Oud, Caramel', base:'Amber, Incense'} },
-            { id:12, name:'Eclaire',                       category:'unisex', price:15000, badge:'New',            image:'images/Eclaire perfume.jpg',                               emoji:'&#128525;', description:'A sweet gourmand fragrance with creamy vanilla, caramel and soft floral touches.',                                        notes:{top:'Caramel, Sugar', middle:'Vanilla, White Flowers', base:'Musk, Amber'} },
-            { id:13, name:'Rayhan Elixir',                       category:'men', price:46000, badge:'',            image:'images/Rayhan Elixir(100ml).jpg',                               emoji:'&#128293;', description:'A bold and sensual blend of fresh spices, sweet amber and deep woody accords.',                                        notes:{top:'Bergamot, Spices', middle:'Amber, Vanilla', base:'Woody Notes, Musk'} },
-            { id:14, name:'Hawas Elixir',                       category:'men', price:65000, badge:'',            image:'images/Hawas Elixir(100ml).jpg',                               emoji:'&#128293;', description:'A fresh and seductive scent blending aquatic notes with sweet spices and warm amber.',                                        notes:{top:'Apple, Bergamot, Mint', middle:'Cinnamon, Aquatic Notes', base:'Amber, Musk, Vanilla'} },
-            { id:15, name:'Asad Bourbon',                       category:'unisex', price:30000, badge:'',            image:'images/Asad Bourbon.jpg',                               emoji:'&#128293;', description:'A rich and warm fragrance with spicy bourbon accords, sweet vanilla and deep woody notes.',                                        notes:{top:'Black Pepper, Saffron', middle:'Bourbon Vanilla, Amber', base:'Woody Notes, Patchouli, Musk'} }
-            
+        /*
+        ════════════════════════════════════════════════════
+        PRODUCTS
+        Each product has a "sizes" array.
+        Every entry is { label: '50ml', price: 45000 }
 
+        Rules:
+          - 1 size  → no size selector shown, price shown directly
+          - 2 or 3 sizes → size buttons shown, customer picks one
+          - Add or remove size entries freely per product
+        ════════════════════════════════════════════════════
+        */
+        const products = [
+            {
+                id: 1, name: 'Lattafa Asad', category: 'men',
+                badge: 'Best Seller', image: 'images/Lattafa Asad.jpg', emoji: '🌲',
+                description: 'A rich, oriental fragrance with vanilla and spices.',
+                notes: { top: 'Pineapple, Vanilla', middle: 'Black Pepper, Tobacco', base: 'Coffee, Dry Woods' },
+                sizes: [
+                    { label: '50ml',  price: 45000 },
+                    { label: '100ml', price: 60000 }
+                ]
+            },
+            {
+                id: 2, name: 'Afnan 9PM', category: 'unisex',
+                badge: 'Best Seller', image: 'images/Afnan 9PM.jpg', emoji: '🌹',
+                description: 'Sweet spicy fragrance with fresh apple and warm vanilla.',
+                notes: { top: 'Apple, Bergamot', middle: 'Cinnamon, Lavender', base: 'Vanilla, Orange' },
+                sizes: [
+                    { label: '50ml',  price: 48000 },
+                    { label: '100ml', price: 63000 }
+                ]
+            },
+            {
+                id: 3, name: 'Lattafa Khamrah Qahwa', category: 'unisex',
+                badge: 'New', image: 'images/Lattafa Khamrah Qahwa.jpg', emoji: '☕',
+                description: 'Rich coffee fragrance with vanilla and cinnamon.',
+                notes: { top: 'Cinnamon, Coffee', middle: 'Cardamom, Vanilla', base: 'Musk, Amber' },
+                sizes: [
+                    { label: '50ml',  price: 65000 },
+                    { label: '100ml', price: 80000 }
+                ]
+            },
+            {
+                id: 4, name: 'Lattafa Oud for Glory', category: 'unisex',
+                badge: 'Limited', image: 'images/Lattafa Oud for Glory.jpg', emoji: '🌊',
+                description: 'Rich smoky oud with warm spices, dark woods and a bold presence.',
+                notes: { top: 'Saffron, Nutmeg, Lavender', middle: 'Rich Oud', base: 'Patchouli, Musk' },
+                sizes: [
+                    { label: '50ml',  price: 62000 },
+                    { label: '100ml', price: 77000 }
+                ]
+            },
+            {
+                id: 5, name: 'Armaf Club De Nuit Intense Man', category: 'men',
+                badge: 'Best Seller', image: 'images/Armaf Club De Nuit Intense Man (2).jpg', emoji: '🌙',
+                description: 'Intense and mysterious with smoky birch and spicy undertones.',
+                notes: { top: 'Lemon, Pineapple, Nutmeg', middle: 'Rose, Birch, Jasmine', base: 'Patchouli, Vanilla, Musk, Ambergris' },
+                sizes: [
+                    { label: '50ml',  price: 55000 },
+                    { label: '100ml', price: 70000 }
+                ]
+            },
+            {
+                id: 6, name: 'Lattafa Najdia', category: 'men',
+                badge: 'Best Seller', image: 'images/Lattafa Najdia.jpg', emoji: '🌴',
+                description: 'Fresh, citrusy aquatic with subtle woody warmth — great everyday value.',
+                notes: { top: 'Bergamot, Lemon', middle: 'Cardamom, Lavender', base: 'Amber, Musk' },
+                sizes: [
+                    { label: '30ml',  price: 18000 },
+                    { label: '50ml',  price: 28000 },
+                    { label: '100ml', price: 43000 }
+                ]
+            },
+            {
+                id: 7, name: 'Maison Alhambra Jean Lowe Noir', category: 'men',
+                badge: 'New', image: 'images/Maison Alhambra Jean Lowe Noir.jpg', emoji: '🌲',
+                description: 'Bold incense and oud-forward scent with warm ginger and jasmine.',
+                notes: { top: 'Incense, Oud', middle: 'Ginger, Jasmine, Nutmeg', base: 'Mint, Pink Pepper, Pomelo' },
+                sizes: [
+                    { label: '50ml',  price: 58000 },
+                    { label: '100ml', price: 73000 }
+                ]
+            },
+            {
+                id: 8, name: 'Maison Alhambra Porto Neroli', category: 'unisex',
+                badge: '', image: 'images/Maison Alhambra Porto Neroli.jpg', emoji: '🍊',
+                description: 'Sun-drenched citrus fragrance with neroli and a gentle amber finish.',
+                notes: { top: 'Mandarin, Neroli, Lemon', middle: 'Orange Blossom, Lavender, Sea Salt', base: 'Amber, Wormwood' },
+                sizes: [
+                    { label: '50ml',  price: 35000 },
+                    { label: '100ml', price: 50000 }
+                ]
+            },
+            {
+                id: 9, name: 'Yara', category: 'women',
+                badge: 'Best Seller', image: 'images/Yara.jpg', emoji: '🌸',
+                description: 'Sweet, creamy floral scent with a soft feminine touch.',
+                notes: { top: 'Orchid, Heliotrope', middle: 'Vanilla, Tropical Fruits', base: 'Musk, Sandalwood' },
+                sizes: [
+                    { label: '50ml',  price: 48000 },
+                    { label: '100ml', price: 63000 }
+                ]
+            },
+            {
+                id: 10, name: 'Fakhar Rose', category: 'women',
+                badge: 'New', image: 'images/Fakhar Rose.jpg', emoji: '🌹',
+                description: 'Elegant rose fragrance with a modern sweet twist.',
+                notes: { top: 'Fruits, Lily', middle: 'Rose, Jasmine', base: 'Vanilla, White Musk' },
+                sizes: [
+                    { label: '50ml',  price: 38500 },
+                    { label: '100ml', price: 53500 }
+                ]
+            },
+            {
+                id: 11, name: 'Oud Mood', category: 'unisex',
+                badge: '', image: 'images/Oud Mood.jpg', emoji: '🔥',
+                description: 'Rich oriental oud blended with warm spices and caramel.',
+                notes: { top: 'Saffron, Rose', middle: 'Oud, Caramel', base: 'Amber, Incense' },
+                sizes: [
+                    { label: '50ml',  price: 42000 },
+                    { label: '100ml', price: 57000 }
+                ]
+            },
+            {
+                id: 12, name: 'Eclaire', category: 'women',
+                badge: 'new', image: 'images/Eclaire.jpg', emoji: '😍',
+                description: 'A sweet gourmand fragrance with creamy vanilla, caramel and soft floral touches.',
+                notes: { top: 'Caramel, Sugar', middle: 'Vanilla, White Flowers', base: 'Musk, Amber' },
+                sizes: [
+                    { label: '50ml',  price: 15000 },
+                    { label: '100ml', price: 25000 }
+                ]
+            },
+            {
+                id: 13, name: 'Rayhan Elixir', category: 'men',
+                badge: '', image: 'images/Rayhan Elixir.jpg', emoji: '🔥',
+                description: 'A bold and sensual blend of fresh spices, sweet amber and deep woody accords.',
+                notes: { top: 'Bergamot, Spices', middle: 'Amber, Vanilla', base: 'Woody Notes, Musk' },
+                sizes: [
+                    { label: '50ml',  price: 46000 },
+                    { label: '100ml', price: 60000 }
+                ]
+            },
+            {
+                id: 14, name: 'Hawas Elixir', category: 'men',
+                badge: '', image: 'images/Hawas Elixir.jpg', emoji: '🔥',
+                description: 'A fresh and seductive scent blending aquatic notes with sweet spices and warm amber.',
+                notes: { top: 'Apple, Bergamot, Mint', middle: 'Cinnamon, Aquatic Notes', base: 'Amber, Musk, Vanilla' },
+                sizes: [
+                    { label: '50ml',  price: 65000 },
+                    { label: '100ml', price: 80000 }
+                ]
+            },
+            {
+                id: 15, name: 'Asad Bourbon', category: 'unisex',
+                badge: '', image: 'images/Asad Bourbon.jpg', emoji: '🔥',
+                description: 'A rich and warm fragrance with spicy bourbon accords, sweet vanilla and deep woody notes.',
+                notes: { top: 'Black Pepper, Saffron', middle: 'Bourbon Vanilla, Amber', base: 'Woody Notes, Patchouli, Musk' },
+                sizes: [
+                    { label: '50ml',  price: 30000 },
+                    { label: '100ml', price: 42000 }
+                ]
+            }
         ];
 
         /* ── STATE ── */
@@ -1124,6 +1320,11 @@
         /* ── UTILS ── */
         function formatPrice(n) {
             return '&#8358;' + Number(n).toLocaleString();
+        }
+
+        /* Get the lowest price for a product (first size) */
+        function basePrice(p) {
+            return p.sizes && p.sizes.length ? p.sizes[0].price : 0;
         }
 
         function imgHTML(product) {
@@ -1158,7 +1359,7 @@
             }
         });
 
-        /* ── RENDER ── */
+        /* ── RENDER CARDS ── */
         function renderProducts() {
             var grid = document.getElementById('productsGrid');
             var list = products.slice();
@@ -1169,8 +1370,9 @@
                 list = list.filter(function(p){ return p.category === currentFilter; });
             }
 
-            if (currentSort === 'price-low')  list.sort(function(a,b){ return a.price - b.price; });
-            else if (currentSort === 'price-high') list.sort(function(a,b){ return b.price - a.price; });
+            /* Sort uses the first (lowest) size price */
+            if (currentSort === 'price-low')  list.sort(function(a,b){ return basePrice(a) - basePrice(b); });
+            else if (currentSort === 'price-high') list.sort(function(a,b){ return basePrice(b) - basePrice(a); });
             else if (currentSort === 'name')  list.sort(function(a,b){ return a.name.localeCompare(b.name); });
 
             if (list.length === 0) {
@@ -1180,6 +1382,11 @@
 
             grid.innerHTML = list.map(function(p) {
                 var badgeCls = p.badge === 'Limited' ? 'limited' : (p.badge === 'New' ? 'new-badge' : '');
+                /* Show lowest price with "From" if multiple sizes, exact price if one size */
+                var priceDisplay = p.sizes.length > 1
+                    ? '<span style="font-size:.72rem;font-weight:400;letter-spacing:.06em;opacity:.7">From </span>' + formatPrice(basePrice(p))
+                    : formatPrice(basePrice(p));
+
                 return '<div class="product-card" onclick="openModal(' + p.id + ')">' +
                     '<div class="product-image">' +
                         (p.badge ? '<span class="badge ' + badgeCls + '">' + p.badge + '</span>' : '') +
@@ -1191,7 +1398,7 @@
                         '<h3>' + p.name + '</h3>' +
                         '<p class="product-description">' + p.description + '</p>' +
                         '<div class="product-footer">' +
-                            '<span class="price">' + formatPrice(p.price) + '</span>' +
+                            '<span class="price">' + priceDisplay + '</span>' +
                             '<span class="rating">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' +
                         '</div>' +
                     '</div>' +
@@ -1217,11 +1424,37 @@
             if (!p) return;
             modalQty = 1;
 
+            /* Build size selector — only if more than 1 size */
+            var sizeSection = '';
+            if (p.sizes.length === 1) {
+                /* Single size — just show a plain label, no buttons needed */
+                sizeSection =
+                    '<div class="size-selector">' +
+                        '<div class="single-size-tag">' +
+                            '<span class="sz-label">' + p.sizes[0].label + '</span>' +
+                            '<span class="sz-price">' + formatPrice(p.sizes[0].price) + '</span>' +
+                        '</div>' +
+                    '</div>';
+            } else {
+                var btns = p.sizes.map(function(s, i) {
+                    return '<button class="size-btn' + (i === 0 ? ' active' : '') + '" ' +
+                               'data-size="' + s.label + '" data-price="' + s.price + '">' +
+                               '<span class="sz-label">' + s.label + '</span>' +
+                               '<span class="sz-price">' + formatPrice(s.price) + '</span>' +
+                           '</button>';
+                }).join('');
+                sizeSection =
+                    '<div class="size-selector">' +
+                        '<h4>Choose Size</h4>' +
+                        '<div class="size-options">' + btns + '</div>' +
+                    '</div>';
+            }
+
             document.getElementById('modalBody').innerHTML =
                 '<div class="modal-image">' + imgHTML(p) + '</div>' +
                 '<div class="modal-details">' +
                     '<h2>' + p.name + '</h2>' +
-                    '<div class="modal-price">' + formatPrice(p.price) + '</div>' +
+                    '<div class="modal-price" id="modalPriceDisplay">' + formatPrice(p.sizes[0].price) + '</div>' +
                     '<p class="modal-description">' + p.description + '</p>' +
                     '<div class="scent-notes"><h4>Scent Notes</h4>' +
                         '<div class="notes-list">' +
@@ -1229,11 +1462,7 @@
                             '<div class="note-item"><span class="note-label">Middle:</span><span>' + p.notes.middle + '</span></div>' +
                             '<div class="note-item"><span class="note-label">Base:</span><span>' + p.notes.base + '</span></div>' +
                         '</div></div>' +
-                    '<div class="size-selector"><h4>Size</h4>' +
-                        '<div class="size-options">' +
-                            '<button class="size-btn active" data-size="50ml" data-extra="0">50ml</button>' +
-                            '<button class="size-btn" data-size="100ml" data-extra="15000">100ml (+&#8358;15,000)</button>' +
-                        '</div></div>' +
+                    sizeSection +
                     '<div class="quantity-selector"><h4>Quantity</h4>' +
                         '<div class="quantity-controls">' +
                             '<button class="qty-btn" onclick="changeQty(-1)">&#8722;</button>' +
@@ -1244,11 +1473,13 @@
                     '<button class="wishlist-btn">&#9825; Add to Wishlist</button>' +
                 '</div>';
 
-            /* size button toggle */
+            /* Size button toggle — updates price display */
             document.querySelectorAll('.size-btn').forEach(function(btn) {
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.size-btn').forEach(function(b){ b.classList.remove('active'); });
                     this.classList.add('active');
+                    var priceEl = document.getElementById('modalPriceDisplay');
+                    if (priceEl) priceEl.innerHTML = formatPrice(parseInt(this.dataset.price));
                 });
             });
 
@@ -1264,34 +1495,46 @@
             document.getElementById('modalQtyDisplay').textContent = modalQty;
         }
 
+        /* Quick Add — always uses first (smallest) size */
         function quickAdd(id) {
             var p = products.find(function(x){ return x.id === id; });
-            addToCart(p, '50ml', 0, 1);
+            if (!p) return;
+            var s = p.sizes[0];
+            addToCart(p, s.label, s.price, 1);
         }
 
         function addFromModal(id) {
             var p = products.find(function(x){ return x.id === id; });
-            var sizeBtn = document.querySelector('.size-btn.active');
-            var size  = sizeBtn.dataset.size;
-            var extra = parseInt(sizeBtn.dataset.extra) || 0;
-            addToCart(p, size, extra, modalQty);
+            if (!p) return;
+            var size, price;
+            var activeBtn = document.querySelector('.size-btn.active');
+            if (activeBtn) {
+                /* Multiple sizes — use selected button */
+                size  = activeBtn.dataset.size;
+                price = parseInt(activeBtn.dataset.price);
+            } else {
+                /* Single size — use the only size */
+                size  = p.sizes[0].label;
+                price = p.sizes[0].price;
+            }
+            addToCart(p, size, price, modalQty);
             closeModal();
         }
 
         /* ── CART ── */
-        function addToCart(product, size, extraPrice, qty) {
-            var totalPrice = product.price + extraPrice;
+        /* price is now passed in directly (not base + extra) */
+        function addToCart(product, size, price, qty) {
             var existing = cart.find(function(i){ return i.id === product.id && i.size === size; });
             if (existing) {
                 existing.qty += qty;
             } else {
-                cart.push({ id:product.id, name:product.name, price:totalPrice,
+                cart.push({ id:product.id, name:product.name, price:price,
                             image:product.image || '', emoji:product.emoji || '&#127873;',
                             size:size, qty:qty });
             }
             updateCartUI();
             showCart();
-            showToast('&#10003; ' + product.name + ' added to cart');
+            showToast('&#10003; ' + product.name + ' (' + size + ') added to cart');
         }
 
         function showCart() {
