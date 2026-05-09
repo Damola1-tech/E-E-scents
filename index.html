@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>E&amp;E Scents Perfumes — Your Invisible Beauty Perfectly Scented</title>
+    <title>E&amp;E Scents — Top Perfume Brands Delivered to Your Door</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -212,6 +212,29 @@
         .hero-slide.active {
             opacity: 1;
         }
+
+        /* Full-cover video inside each slide */
+        .slide-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 1;
+        }
+
+        /* Image fallback — sits behind video, shows if no video file */
+        .slide-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+
+        /* Ken Burns on image-only slides */
+        .slide-bg.kb-zoom-in { animation: kbZoomIn 8s ease-out forwards; }
 
         /* ── KEN BURNS ANIMATIONS ──
            Each slide gets a slightly different motion so it feels
@@ -859,21 +882,53 @@
     <!-- Hero Slideshow -->
     <section class="hero" id="heroSection">
 
-        <!-- Slide 1 -->
-        <div class="hero-slide active kb-zoom-in"
-             style="background-image: url('images/hero.jpg');"></div>
+        <!--
+        ═══════════════════════════════════════════════════════
+        HOW TO ADD YOUR VIDEOS:
+        1. Go to pexels.com and download these FREE videos:
+           • "Woman spraying perfume"  → save as  videos/hero1.mp4
+           • "Applying perfume wrist"  → save as  videos/hero2.mp4
+           • "Man spraying cologne"    → save as  videos/hero3.mp4
+        2. Create a folder called "videos" next to index.html
+        3. Put the mp4 files inside it
+        4. The slides below will automatically show them!
 
-        <!-- Slide 2 — uses your product image as a hero background -->
-        <div class="hero-slide kb-pan-right"
-             style="background-image: url('images/spraying tomford.jpg');"></div>
+        No videos yet? The slides show beautiful images instead.
+        ═══════════════════════════════════════════════════════
+        -->
 
-        <!-- Slide 3 -->
-        <div class="hero-slide kb-zoom-out"
-             style="background-image: url('images/Armaf Club De Nuit Intense Man (2).jpg');"></div>
+        <!-- SLIDE 1 — video (hero1.mp4) with image fallback -->
+        <div class="hero-slide active" id="slide1">
+            <video class="slide-video" id="vid1" autoplay muted loop playsinline
+                   onerror="this.style.display='none'">
+                <source src="videos/hero1.mp4" type="video/mp4">
+            </video>
+            <!-- fallback image shown if no video file -->
+            <div class="slide-bg" style="background-image:url('images/spraying tomford.jpg')"></div>
+        </div>
 
-        <!-- Slide 4 -->
-        <div class="hero-slide kb-pan-left"
-             style="background-image: url('images/Yara.jpg');"></div>
+        <!-- SLIDE 2 — video (hero2.mp4) with image fallback -->
+        <div class="hero-slide" id="slide2">
+            <video class="slide-video" id="vid2" muted loop playsinline
+                   onerror="this.style.display='none'">
+                <source src="videos/hero2.mp4" type="video/mp4">
+            </video>
+            <div class="slide-bg" style="background-image:url('images/Yara.jpg')"></div>
+        </div>
+
+        <!-- SLIDE 3 — video (hero3.mp4) with image fallback -->
+        <div class="hero-slide" id="slide3">
+            <video class="slide-video" id="vid3" muted loop playsinline
+                   onerror="this.style.display='none'">
+                <source src="videos/hero3.mp4" type="video/mp4">
+            </video>
+            <div class="slide-bg" style="background-image:url('images/Armaf Club De Nuit Intense Man (2).jpg')"></div>
+        </div>
+
+        <!-- SLIDE 4 — your own hero image -->
+        <div class="hero-slide" id="slide4">
+            <div class="slide-bg kb-zoom-in" style="background-image:url('images/hero.jpg')"></div>
+        </div>
 
         <!-- Arrow controls -->
         <button class="hero-arrow prev" onclick="heroNav(-1)" aria-label="Previous">&#8592;</button>
@@ -882,12 +937,12 @@
         <!-- Dot indicators -->
         <div class="hero-dots" id="heroDots"></div>
 
-        <!-- Content (always on top) -->
+        <!-- Text content -->
         <div class="hero-content">
             <div class="hero-content-inner" id="heroTextInner">
                 <span class="hero-eyebrow">Luxury Fragrances</span>
                 <h1>E&amp;E Scents Perfumes</h1>
-                <p>Your Invisible Beauty, Perfectly Scented.</p>
+                <p>The best perfume brands, delivered to your door.</p>
                 <a href="shop.html" class="shop-btn">Explore Collection</a>
             </div>
         </div>
@@ -896,8 +951,8 @@
 
     <!-- Featured -->
     <section class="featured" id="shop">
-        <span class="section-label">Curated For You</span>
-        <h2 class="section-title">Featured Scents</h2>
+        <span class="section-label">Handpicked For You</span>
+        <h2 class="section-title">Top Selling Perfumes</h2>
         <div class="products-grid">
 
             <div class="product-card" onclick="window.location.href='shop.html'">
@@ -956,10 +1011,10 @@
     <section class="story" id="about">
         <div class="story-content">
             <div class="story-text">
-                <span class="section-label">Our Story</span>
-                <h2 class="section-title">Crafted With Passion</h2>
-                <p>E&amp;E Scents is dedicated to curating unique and luxurious perfumes sourced from the finest fragrance houses around the world.</p>
-                <p>Each fragrance tells a story, crafted with passion and artistry to bring out your invisible beauty, the scent that lingers long after you leave the room.</p>
+                <span class="section-label">About Us</span>
+                <h2 class="section-title">We Find the Good Ones</h2>
+                <p>E&amp;E Scents is a perfume shop dedicated to bringing you the best fragrances from top brands around the world, right here in Nigeria.</p>
+                <p>We take the stress out of finding quality perfumes. Every bottle we carry is genuine, carefully selected, and available at a fair price so you always smell great without the hassle.</p>
             </div>
             <div class="story-features">
                 <div class="feature">
@@ -968,8 +1023,8 @@
                              onerror="this.style.display='none'">
                     </div>
                     <div>
-                        <h3>Craftsmanship at Its Finest</h3>
-                        <p>Every E&amp;E Scents perfume is selected with love and precision, blending unique scents for an extraordinary, lasting experience.</p>
+                        <h3>Only Genuine Products</h3>
+                        <p>Every perfume we sell is 100% authentic. No fakes, no shortcuts. You get exactly what you ordered, every time.</p>
                     </div>
                 </div>
                 <div class="feature">
@@ -978,8 +1033,8 @@
                              onerror="this.style.display='none'">
                     </div>
                     <div>
-                        <h3>Sustainability</h3>
-                        <p>We prioritize sustainability in our sourcing and production processes, beautiful scents, responsibly delivered.</p>
+                        <h3>Fast and Reliable Delivery</h3>
+                        <p>We ship across Nigeria. Order today and your perfume gets to your door quickly, packaged safely so it arrives in perfect condition.</p>
                     </div>
                 </div>
             </div>
@@ -988,8 +1043,8 @@
 
     <!-- Testimonials -->
     <section class="testimonials">
-        <span class="section-label">Customer Love</span>
-        <h2 class="section-title">What Our Customers Say</h2>
+        <span class="section-label">Happy Customers</span>
+        <h2 class="section-title">What People Are Saying</h2>
         <div class="testimonials-grid">
             <div class="testimonial-card">
                 <div class="testimonial-header">
@@ -1002,7 +1057,7 @@
                         <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                     </div>
                 </div>
-                <p>"Absolutely exquisite! The scents linger beautifully all day. I get compliments everywhere I go."</p>
+                <p>"Got my order within two days and the perfume is 100% original. Already bought a second one for my boyfriend."</p>
             </div>
             <div class="testimonial-card">
                 <div class="testimonial-header">
@@ -1015,7 +1070,7 @@
                         <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                     </div>
                 </div>
-                <p>"A true luxury experience! I've already gifted E&amp;E fragrances to three friends, they were blown away."</p>
+                <p>"I was sceptical ordering online but E&amp;E Scents delivered exactly what was shown. The packaging was neat and the price was fair. Will order again."</p>
             </div>
         </div>
     </section>
@@ -1024,7 +1079,7 @@
     <section class="blog">
         <div class="blog-content">
             <span class="section-label">From The Community</span>
-            <h2 class="section-title">Latest Posts</h2>
+            <h2 class="section-title">People Are Talking</h2>
             <div class="blog-grid">
                 <div class="blog-card">
                     <div class="blog-image">
@@ -1032,7 +1087,7 @@
                              onerror="this.style.display='none'">
                     </div>
                     <div class="blog-info">
-                        <h3>Unboxing my new favorite scents from E&amp;E fragrance</h3>
+                        <h3>Unboxing my new favorite E&amp;E fragrance</h3>
                         <div class="blog-tags">
                             <span class="tag">#Unboxing</span>
                             <span class="tag">#Fragrance</span>
@@ -1062,8 +1117,8 @@
     <section class="newsletter" id="contact">
         <div>
             <span class="section-label">Stay In The Know</span>
-            <h2 class="section-title">Join Our Newsletter</h2>
-            <p class="section-desc">New arrivals, exclusive deals, and the latest in luxury fragrances, straight to your inbox.</p>
+            <h2 class="section-title">Stay in the Loop</h2>
+            <p class="section-desc">Be the first to know when new perfumes drop and get exclusive deals in your inbox.</p>
         </div>
         <div>
             <form class="newsletter-form" id="newsletterForm" onsubmit="handleSubscribe(event)">
@@ -1121,20 +1176,17 @@
             document.getElementById('newsletterSuccess').style.display = 'block';
         }
 
-        /* ── HERO SLIDESHOW + KEN BURNS ── */
+        /* ── HERO SLIDESHOW + VIDEO ── */
         (function() {
-            var slides     = document.querySelectorAll('.hero-slide');
-            var dotsWrap   = document.getElementById('heroDots');
-            var textInner  = document.getElementById('heroTextInner');
-            var current    = 0;
-            var total      = slides.length;
-            var timer      = null;
-            var INTERVAL   = 5500; // ms between slides
+            var slides    = document.querySelectorAll('.hero-slide');
+            var dotsWrap  = document.getElementById('heroDots');
+            var textInner = document.getElementById('heroTextInner');
+            var current   = 0;
+            var total     = slides.length;
+            var timer     = null;
+            var INTERVAL  = 7000;
 
-            // Ken Burns classes — one per slide, cycles if fewer than slides
-            var kbClasses = ['kb-zoom-in', 'kb-pan-right', 'kb-zoom-out', 'kb-pan-left'];
-
-            // Build dots
+            /* Build dots */
             for (var i = 0; i < total; i++) {
                 var dot = document.createElement('button');
                 dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
@@ -1147,26 +1199,37 @@
                 dotsWrap.appendChild(dot);
             }
 
+            function vid(slide) { return slide.querySelector('video'); }
+
+            function playSlide(slide) {
+                var v = vid(slide);
+                if (!v) return;
+                v.play().catch(function() {
+                    /* Video file missing or blocked — hide video, show bg image */
+                    v.style.display = 'none';
+                });
+            }
+
+            function pauseSlide(slide) {
+                var v = vid(slide);
+                if (v) v.pause();
+            }
+
             function goTo(index) {
                 var dots = dotsWrap.querySelectorAll('.hero-dot');
-
-                // Remove active + KB class from current slide
                 slides[current].classList.remove('active');
-                slides[current].classList.remove(kbClasses[current % kbClasses.length]);
                 dots[current].classList.remove('active');
+                pauseSlide(slides[current]);
 
                 current = (index + total) % total;
 
-                // Add active + fresh KB class to new slide
-                var newKB = kbClasses[current % kbClasses.length];
-                slides[current].classList.remove(newKB); // force reflow
-                void slides[current].offsetWidth;        // trigger reflow
-                slides[current].classList.add(newKB);
                 slides[current].classList.add('active');
                 dots[current].classList.add('active');
+                playSlide(slides[current]);
 
-                // Re-trigger text animation
+                /* Re-trigger text fade-in */
                 textInner.style.animation = 'none';
+                
                 void textInner.offsetWidth;
                 textInner.style.animation = '';
             }
@@ -1178,22 +1241,19 @@
                 timer = setInterval(next, INTERVAL);
             }
 
-            // Expose arrow function to global scope
-            window.heroNav = function(dir) {
-                goTo(current + dir);
-                resetTimer();
-            };
+            window.heroNav = function(dir) { goTo(current + dir); resetTimer(); };
 
-            // Pause on hover (desktop only)
+            /* Pause on hover */
             var section = document.getElementById('heroSection');
             section.addEventListener('mouseenter', function() { clearInterval(timer); });
             section.addEventListener('mouseleave', resetTimer);
 
-            // Start
+            /* Start */
+            playSlide(slides[0]);
             resetTimer();
         })();
 
-        /* ── SMOOTH SCROLL for anchor links ── */
+        /* ── SMOOTH SCROLL ── */
         document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
             anchor.addEventListener('click', function(e) {
                 var href = this.getAttribute('href');
