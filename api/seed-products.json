@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "name": "Lattafa Asad",
+    "category": "men",
+    "badge": "Best Seller",
+    "image": "https://res.cloudinary.com/REPLACE_ME/lattafa-asad.jpg",
+    "description": "A rich, oriental fragrance with vanilla and spices.",
+    "notes": { "top": "Pineapple, Vanilla", "middle": "Black Pepper, Tobacco", "base": "Coffee, Dry Woods" },
+    "sizes": [
+      { "label": "50ml", "price": 45000 },
+      { "label": "100ml", "price": 60000 }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Afnan 9PM",
+    "category": "unisex",
+    "badge": "Best Seller",
+    "image": "https://res.cloudinary.com/REPLACE_ME/afnan-9pm.jpg",
+    "description": "Sweet spicy fragrance with fresh apple and warm vanilla.",
+    "notes": { "top": "Apple, Bergamot", "middle": "Cinnamon, Lavender", "base": "Vanilla, Orange" },
+    "sizes": [
+      { "label": "50ml", "price": 48000 },
+      { "label": "100ml", "price": 63000 }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Lattafa Khamrah Qahwa",
+    "category": "unisex",
+    "badge": "New",
+    "image": "https://res.cloudinary.com/REPLACE_ME/khamrah-qahwa.jpg",
+    "description": "Rich coffee fragrance with vanilla and cinnamon.",
+    "notes": { "top": "Cinnamon, Coffee", "middle": "Cardamom, Vanilla", "base": "Musk, Amber" },
+    "sizes": [
+      { "label": "50ml", "price": 65000 },
+      { "label": "100ml", "price": 80000 }
+    ]
+  }
+]
