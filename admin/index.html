@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E&amp;E Scents — Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c9a96e;
+            --dark: #1a1a1a;
+            --mid: #3a3a3a;
+            --cream: #faf8f4;
+            --warm-gray: #9a9080;
+            --danger: #b3473d;
+            --success: #3a7a4a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Jost', sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            min-height: 100vh;
+        }
+
+        /* ── LOGIN SCREEN ── */
+        #loginScreen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        .login-box {
+            background: white;
+            border-radius: 6px;
+            padding: 2.8rem 2.4rem;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .login-box h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            margin-bottom: 0.3rem;
+        }
+        .login-box p { color: var(--warm-gray); font-size: 0.85rem; margin-bottom: 1.8rem; }
+        .login-box input {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-family: 'Jost', sans-serif;
+        }
+        .login-box input:focus { outline: none; border-color: var(--gold); }
+        .login-box button {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--dark);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.25s;
+        }
+        .login-box button:hover { background: var(--gold); }
+        .login-error {
+            color: var(--danger);
+            font-size: 0.82rem;
+            margin-top: 0.9rem;
+            display: none;
+        }
+
+        /* ── APP SHELL ── */
+        #app { display: none; }
+        #app.active { display: block; }
+
+        .topbar {
+            background: var(--dark);
+            color: white;
+            padding: 1.1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .topbar h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+        }
+        .topbar .sub { color: var(--gold); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
+        .logout-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 0.5rem 1.1rem;
+            border-radius: 3px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            font-family: 'Jost', sans-serif;
+        }
+        .logout-btn:hover { background: rgba(255,255,255,0.2); }
+
+        .main-content { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+
+        .tab-bar {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.5rem;
+            padding: 1.4rem 2rem 0;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--warm-gray);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-btn.active { color: var(--dark); border-bottom-color: var(--gold); font-weight: 600; }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .toolbar h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+        .add-btn {
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: background 0.25s;
+        }
+        .add-btn:hover { background: var(--gold); }
+
+        /* ── PRODUCT TABLE / CARDS ── */
+        .product-list { display: flex; flex-direction: column; gap: 0.8rem; }
+
+        .product-row {
+            background: white;
+            border-radius: 4px;
+            padding: 1rem 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+        }
+
+        .row-thumb {
+            width: 56px; height: 56px;
+            border-radius: 3px;
+            background: linear-gradient(135deg, #f2ede7, #e0d8cc);
+            flex-shrink: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+        .row-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .row-info { flex: 1; min-width: 0; }
+        .row-info h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.15rem;
+        }
+        .row-meta { font-size: 0.78rem; color: var(--warm-gray); display: flex; gap: 0.7rem; flex-wrap: wrap; }
+        .row-meta span { white-space: nowrap; }
+
+        .row-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+        .row-actions button {
+            border: none;
+            padding: 0.5rem 0.95rem;
+            border-radius: 3px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Jost', sans-serif;
+        }
+        .edit-btn { background: #f0ece6; color: var(--mid); }
+        .edit-btn:hover { background: #e5e0d8; }
+        .delete-btn { background: #fbeae8; color: var(--danger); }
+        .delete-btn:hover { background: #f6d8d4; }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: var(--warm-gray);
+        }
+        .empty-state p { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; margin-bottom: 0.5rem; }
+
+        /* ── FORM MODAL ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 500;
+            align-items: flex-start;
+            justify-content: center;
+            overflow-y: auto;
+            padding: 2rem 1rem;
+        }
+        .modal-overlay.active { display: flex; }
+
+        .form-modal {
+            background: white;
+            border-radius: 6px;
+            max-width: 600px;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .form-modal-header {
+            padding: 1.7rem 2rem 1.2rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .form-modal-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        .modal-close-x {
+            background: #f0ece6;
+            border: none;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .form-body { padding: 1.6rem 2rem 2rem; }
+
+        .field { margin-bottom: 1.2rem; }
+        .field label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-bottom: 0.4rem;
+        }
+        .field input, .field select, .field textarea {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-family: 'Jost', sans-serif;
+            font-size: 0.9rem;
+        }
+        .field input:focus, .field select:focus, .field textarea:focus {
+            outline: none; border-color: var(--gold);
+        }
+        .field textarea { resize: vertical; min-height: 70px; }
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .field-hint { font-size: 0.74rem; color: var(--warm-gray); margin-top: 0.3rem; }
+
+        /* photo upload */
+        .photo-upload {
+            border: 2px dashed #ddd;
+            border-radius: 4px;
+            padding: 1.4rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            position: relative;
+        }
+        .photo-upload:hover { border-color: var(--gold); }
+        .photo-upload.has-image { padding: 0; border: 1px solid #ddd; }
+        .photo-upload input[type="file"] {
+            position: absolute; inset: 0; opacity: 0; cursor: pointer;
+        }
+        .photo-preview { width: 100%; height: 180px; object-fit: cover; display: block; border-radius: 3px; }
+        .photo-upload-text { color: var(--warm-gray); font-size: 0.85rem; }
+        .upload-progress {
+            font-size: 0.78rem; color: var(--gold); margin-top: 0.5rem; display: none;
+        }
+
+        /* sizes builder */
+        .sizes-builder { display: flex; flex-direction: column; gap: 0.6rem; }
+        .size-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.6rem; align-items: center; }
+        .size-row input { padding: 0.6rem 0.8rem; }
+        .remove-size-btn {
+            background: #fbeae8; color: var(--danger); border: none;
+            width: 34px; height: 34px; border-radius: 3px; cursor: pointer; font-size: 1rem;
+        }
+        .add-size-btn {
+            background: #f0ece6; color: var(--mid); border: none;
+            padding: 0.55rem 1rem; border-radius: 3px; font-size: 0.8rem;
+            cursor: pointer; align-self: flex-start; margin-top: 0.3rem;
+        }
+        .add-size-btn:hover { background: #e5e0d8; }
+
+        .form-footer {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.8rem;
+            padding-top: 1.4rem;
+            border-top: 1px solid #eee;
+        }
+        .save-btn {
+            flex: 1;
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 0.9rem;
+            border-radius: 3px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.25s;
+        }
+        .save-btn:hover { background: var(--gold); }
+        .save-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .cancel-form-btn {
+            background: #f0ece6;
+            color: var(--mid);
+            border: none;
+            padding: 0.9rem 1.4rem;
+            border-radius: 3px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        /* ── DELETE CONFIRM ── */
+        .confirm-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 600;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        .confirm-overlay.active { display: flex; }
+        .confirm-box {
+            background: white;
+            border-radius: 6px;
+            padding: 2rem;
+            max-width: 380px;
+            text-align: center;
+        }
+        .confirm-box p { margin-bottom: 1.5rem; font-size: 0.92rem; }
+        .confirm-box strong { display: block; margin-bottom: 0.4rem; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; }
+        .confirm-actions { display: flex; gap: 0.7rem; }
+        .confirm-delete-btn {
+            flex: 1; background: var(--danger); color: white; border: none;
+            padding: 0.75rem; border-radius: 3px; cursor: pointer; font-weight: 600; font-size: 0.82rem;
+        }
+        .confirm-cancel-btn {
+            flex: 1; background: #f0ece6; color: var(--mid); border: none;
+            padding: 0.75rem; border-radius: 3px; cursor: pointer; font-size: 0.82rem;
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 1.8rem; left: 50%;
+            transform: translateX(-50%) translateY(120px);
+            background: var(--dark);
+            color: white;
+            padding: 0.8rem 1.6rem;
+            border-radius: 4px;
+            font-size: 0.84rem;
+            z-index: 900;
+            transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+            max-width: 90vw;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.error { background: var(--danger); }
+
+        @media (max-width: 640px) {
+            .topbar { padding: 1rem 1.2rem; }
+            .main-content { padding: 1.5rem 1.2rem 3rem; }
+            .product-row { flex-wrap: wrap; }
+            .row-actions { width: 100%; justify-content: flex-end; }
+            .field-row { grid-template-columns: 1fr; }
+            .form-body { padding: 1.4rem 1.3rem 1.8rem; }
+            .form-modal-header { padding: 1.4rem 1.3rem 1rem; }
+            .size-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen">
+        <div class="login-box">
+            <h1>E&amp;E Scents</h1>
+            <p>Admin Dashboard &mdash; Staff Only</p>
+            <input type="password" id="passwordInput" placeholder="Enter admin password" autocomplete="off">
+            <button onclick="attemptLogin()">Sign In</button>
+            <p class="login-error" id="loginError">Incorrect password. Please try again.</p>
+        </div>
+    </div>
+
+    <!-- ADMIN APP -->
+    <div id="app">
+        <div class="topbar">
+            <div>
+                <h1>E&amp;E Scents</h1>
+                <div class="sub">Admin Dashboard</div>
+            </div>
+            <button class="logout-btn" onclick="logout()">Log Out</button>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" id="tabPerfumes" onclick="switchTab('perfumes')">Perfumes</button>
+            <button class="tab-btn" id="tabSubscribers" onclick="switchTab('subscribers')">Newsletter Subscribers</button>
+        </div>
+
+        <div class="main-content" id="perfumesView">
+            <div class="toolbar">
+                <h2>Your Perfumes</h2>
+                <button class="add-btn" onclick="openForm()">+ Add New Perfume</button>
+            </div>
+
+            <div class="product-list" id="productList">
+                <div class="empty-state"><p>Loading&hellip;</p></div>
+            </div>
+        </div>
+
+        <div class="main-content" id="subscribersView" style="display:none;">
+            <div class="toolbar">
+                <h2>Newsletter Subscribers</h2>
+                <div style="display:flex; gap:0.6rem;">
+                    <button class="add-btn" id="copyEmailsBtn" onclick="copyAllEmails()">Copy All Emails</button>
+                    <button class="add-btn" onclick="downloadCSV()">Download CSV</button>
+                </div>
+            </div>
+            <p class="field-hint" style="margin-bottom:1.2rem;">
+                Copy these emails into Gmail/Outlook (as BCC) to send an update about new perfumes.
+            </p>
+            <div class="product-list" id="subscriberList">
+                <div class="empty-state"><p>Loading&hellip;</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD/EDIT FORM MODAL -->
+    <div class="modal-overlay" id="formOverlay">
+        <div class="form-modal">
+            <div class="form-modal-header">
+                <h2 id="formTitle">Add New Perfume</h2>
+                <button class="modal-close-x" onclick="closeForm()">&times;</button>
+            </div>
+            <div class="form-body">
+                <form id="productForm" onsubmit="saveProduct(event)">
+                    <div class="field">
+                        <label>Photo</label>
+                        <div class="photo-upload" id="photoUploadBox">
+                            <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoSelect(event)">
+                            <div id="photoPlaceholder">
+                                <div class="photo-upload-text">Click to upload a photo<br>(JPG or PNG, ideally square)</div>
+                            </div>
+                        </div>
+                        <div class="upload-progress" id="uploadProgress">Uploading photo&hellip;</div>
+                    </div>
+
+                    <div class="field">
+                        <label>Perfume Name <span style="color:var(--gold)">*</span></label>
+                        <input type="text" id="fieldName" required placeholder="e.g. Lattafa Asad">
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field">
+                            <label>Category</label>
+                            <select id="fieldCategory">
+                                <option value="men">Men's</option>
+                                <option value="women">Women's</option>
+                                <option value="unisex">Unisex</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>Badge (optional)</label>
+                            <select id="fieldBadge">
+                                <option value="">None</option>
+                                <option value="New">New</option>
+                                <option value="Best Seller">Best Seller</option>
+                                <option value="Limited">Limited</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Short Description</label>
+                        <textarea id="fieldDescription" placeholder="One or two lines describing the scent"></textarea>
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field">
+                            <label>Top Notes</label>
+                            <input type="text" id="fieldTop" placeholder="e.g. Bergamot, Lemon">
+                        </div>
+                        <div class="field">
+                            <label>Middle Notes</label>
+                            <input type="text" id="fieldMiddle" placeholder="e.g. Jasmine, Rose">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Base Notes</label>
+                        <input type="text" id="fieldBase" placeholder="e.g. Musk, Amber">
+                    </div>
+
+                    <div class="field">
+                        <label>Sizes &amp; Prices</label>
+                        <div class="sizes-builder" id="sizesBuilder"></div>
+                        <button type="button" class="add-size-btn" onclick="addSizeRow()">+ Add Another Size</button>
+                        <div class="field-hint">Add at least one size with its price in Naira.</div>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="save-btn" id="saveBtn">Save Perfume</button>
+                        <button type="button" class="cancel-form-btn" onclick="closeForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE CONFIRM -->
+    <div class="confirm-overlay" id="confirmOverlay">
+        <div class="confirm-box">
+            <p><strong id="confirmProductName"></strong>Are you sure you want to delete this perfume? This can't be undone.</p>
+            <div class="confirm-actions">
+                <button class="confirm-delete-btn" onclick="confirmDelete()">Delete</button>
+                <button class="confirm-cancel-btn" onclick="closeConfirm()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        /* ════════════════════════════════════════════
+           CONFIG
+           This admin page lives on the SAME deployed
+           site as shop.html (just under /admin/), so it
+           can call the same /api/* functions.
+           ════════════════════════════════════════════ */
+        const API_BASE = '/api';
+
+        // Session storage so she doesn't retype the password every click,
+        // but it clears when the browser tab is closed.
+        function getAdminKey() { return sessionStorage.getItem('ee_admin_key'); }
+        function setAdminKey(k) { sessionStorage.setItem('ee_admin_key', k); }
+        function clearAdminKey() { sessionStorage.removeItem('ee_admin_key'); }
+
+        let products = [];
+        let editingId = null;     // null = adding new, otherwise editing this id
+        let pendingDeleteId = null;
+        let uploadedImageUrl = null;
+
+        /* ── LOGIN ── */
+        // NOTE: This checks the password by trying it against the API.
+        // There's no "stored password" in this file at all — the real
+        // check happens server-side using the ADMIN_KEY environment
+        // variable, which only Netlify and your client know.
+        async function attemptLogin() {
+            const pw = document.getElementById('passwordInput').value.trim();
+            if (!pw) return;
+
+            try {
+                const res = await fetch(API_BASE + '/products', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'x-admin-key': pw },
+                    body: JSON.stringify({ __ping: true })
+                });
+                // 401 = wrong password. Anything else means the password
+                // was accepted (even if this particular ping request
+                // itself returns a different status later).
+                if (res.status === 401) {
+                    document.getElementById('loginError').style.display = 'block';
+                    return;
+                }
+                setAdminKey(pw);
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('app').classList.add('active');
+                loadProducts();
+            } catch (err) {
+                document.getElementById('loginError').textContent =
+                    'Could not reach the server. Check your connection and try again.';
+                document.getElementById('loginError').style.display = 'block';
+            }
+        }
+
+        document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') attemptLogin();
+        });
+
+        function logout() {
+            clearAdminKey();
+            document.getElementById('app').classList.remove('active');
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('passwordInput').value = '';
+        }
+
+        // If she already has a valid session key, skip the login screen.
+        (function checkExistingSession() {
+            const key = getAdminKey();
+            if (key) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('app').classList.add('active');
+                loadProducts();
+            }
+        })();
+
+        function showToast(msg, isError) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.toggle('error', !!isError);
+            t.classList.add('show');
+            clearTimeout(t._timer);
+            t._timer = setTimeout(function(){ t.classList.remove('show'); }, 3000);
+        }
+
+        function formatPrice(n) { return '\u20A6' + Number(n).toLocaleString(); }
+
+        /* ── TABS ── */
+        let subscribers = [];
+
+        function switchTab(tab) {
+            const perfumesView = document.getElementById('perfumesView');
+            const subsView = document.getElementById('subscribersView');
+            const tabP = document.getElementById('tabPerfumes');
+            const tabS = document.getElementById('tabSubscribers');
+
+            if (tab === 'subscribers') {
+                perfumesView.style.display = 'none';
+                subsView.style.display = 'block';
+                tabP.classList.remove('active');
+                tabS.classList.add('active');
+                loadSubscribers();
+            } else {
+                perfumesView.style.display = 'block';
+                subsView.style.display = 'none';
+                tabS.classList.remove('active');
+                tabP.classList.add('active');
+            }
+        }
+
+        /* ── LOAD + RENDER SUBSCRIBERS ── */
+        async function loadSubscribers() {
+            const list = document.getElementById('subscriberList');
+            try {
+                const res = await fetch(API_BASE + '/subscribers', {
+                    headers: { 'x-admin-key': getAdminKey() }
+                });
+                if (!res.ok) throw new Error('Failed to load');
+                subscribers = await res.json();
+                renderSubscribers();
+            } catch (err) {
+                list.innerHTML = '<div class="empty-state"><p>Couldn\'t load subscribers.</p></div>';
+            }
+        }
+
+        function renderSubscribers() {
+            const list = document.getElementById('subscriberList');
+            if (!subscribers.length) {
+                list.innerHTML = '<div class="empty-state"><p>No subscribers yet</p><span>Emails will appear here as customers sign up on the site.</span></div>';
+                return;
+            }
+            // newest first
+            const sorted = subscribers.slice().sort(function(a,b){
+                return new Date(b.subscribedAt) - new Date(a.subscribedAt);
+            });
+            list.innerHTML = sorted.map(function(s) {
+                const date = new Date(s.subscribedAt).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+                return '<div class="product-row">' +
+                    '<div class="row-info">' +
+                        '<h3 style="font-size:0.95rem;">' + s.email + '</h3>' +
+                        '<div class="row-meta"><span>Subscribed ' + date + '</span></div>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        async function copyAllEmails() {
+            if (!subscribers.length) { showToast('No subscribers to copy yet.', true); return; }
+            const emails = subscribers.map(function(s){ return s.email; }).join(', ');
+            try {
+                await navigator.clipboard.writeText(emails);
+                showToast('Copied ' + subscribers.length + ' email(s) to clipboard');
+            } catch (err) {
+                showToast('Could not copy automatically — select and copy manually.', true);
+            }
+        }
+
+        function downloadCSV() {
+            if (!subscribers.length) { showToast('No subscribers to export yet.', true); return; }
+            let csv = 'Email,Subscribed Date\n';
+            subscribers.forEach(function(s) {
+                csv += s.email + ',' + s.subscribedAt + '\n';
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ee-scents-subscribers.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        /* ── LOAD + RENDER PRODUCTS ── */
+        async function loadProducts() {
+            const list = document.getElementById('productList');
+            try {
+                const res = await fetch(API_BASE + '/products');
+                products = await res.json();
+                renderList();
+            } catch (err) {
+                list.innerHTML = '<div class="empty-state"><p>Couldn\'t load products.</p></div>';
+            }
+        }
+
+        function renderList() {
+            const list = document.getElementById('productList');
+            if (!products.length) {
+                list.innerHTML = '<div class="empty-state"><p>No perfumes yet</p><span>Click "Add New Perfume" to get started.</span></div>';
+                return;
+            }
+            list.innerHTML = products.map(function(p) {
+                const priceRange = p.sizes.length > 1
+                    ? formatPrice(p.sizes[0].price) + ' \u2013 ' + formatPrice(p.sizes[p.sizes.length-1].price)
+                    : formatPrice(p.sizes[0].price);
+                const thumb = p.image
+                    ? '<img src="' + p.image + '" alt="">'
+                    : '\u{1F33C}';
+                return '<div class="product-row">' +
+                    '<div class="row-thumb">' + thumb + '</div>' +
+                    '<div class="row-info">' +
+                        '<h3>' + p.name + '</h3>' +
+                        '<div class="row-meta">' +
+                            '<span>' + p.category + '</span>' +
+                            (p.badge ? '<span>&bull; ' + p.badge + '</span>' : '') +
+                            '<span>&bull; ' + priceRange + '</span>' +
+                            '<span>&bull; ' + p.sizes.length + ' size' + (p.sizes.length > 1 ? 's' : '') + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="row-actions">' +
+                        '<button class="edit-btn" onclick="openForm(' + p.id + ')">Edit</button>' +
+                        '<button class="delete-btn" onclick="askDelete(' + p.id + ')">Delete</button>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        /* ── FORM: OPEN / CLOSE ── */
+        function openForm(id) {
+            editingId = id || null;
+            uploadedImageUrl = null;
+            document.getElementById('productForm').reset();
+            document.getElementById('sizesBuilder').innerHTML = '';
+            resetPhotoBox();
+
+            if (editingId) {
+                const p = products.find(function(x){ return x.id === editingId; });
+                document.getElementById('formTitle').textContent = 'Edit Perfume';
+                document.getElementById('fieldName').value = p.name;
+                document.getElementById('fieldCategory').value = p.category;
+                document.getElementById('fieldBadge').value = p.badge || '';
+                document.getElementById('fieldDescription').value = p.description || '';
+                document.getElementById('fieldTop').value = (p.notes && p.notes.top) || '';
+                document.getElementById('fieldMiddle').value = (p.notes && p.notes.middle) || '';
+                document.getElementById('fieldBase').value = (p.notes && p.notes.base) || '';
+                if (p.image) {
+                    uploadedImageUrl = p.image;
+                    showPhotoPreview(p.image);
+                }
+                p.sizes.forEach(function(s){ addSizeRow(s.label, s.price); });
+            } else {
+                document.getElementById('formTitle').textContent = 'Add New Perfume';
+                addSizeRow();
+            }
+
+            document.getElementById('formOverlay').classList.add('active');
+        }
+
+        function closeForm() {
+            document.getElementById('formOverlay').classList.remove('active');
+        }
+
+        /* ── SIZES BUILDER ── */
+        function addSizeRow(label, price) {
+            const wrap = document.getElementById('sizesBuilder');
+            const row = document.createElement('div');
+            row.className = 'size-row';
+            row.innerHTML =
+                '<input type="text" placeholder="e.g. 50ml" class="size-label-input" value="' + (label || '') + '">' +
+                '<input type="number" placeholder="Price in \u20A6" class="size-price-input" min="0" value="' + (price || '') + '">' +
+                '<button type="button" class="remove-size-btn" onclick="this.closest(\'.size-row\').remove()">&times;</button>';
+            wrap.appendChild(row);
+        }
+
+        /* ── PHOTO UPLOAD ── */
+        function resetPhotoBox() {
+            const box = document.getElementById('photoUploadBox');
+            box.classList.remove('has-image');
+            box.innerHTML =
+                '<input type="file" id="photoInput" accept="image/*" onchange="handlePhotoSelect(event)">' +
+                '<div id="photoPlaceholder"><div class="photo-upload-text">Click to upload a photo<br>(JPG or PNG, ideally square)</div></div>';
+        }
+
+        function showPhotoPreview(url) {
+            const box = document.getElementById('photoUploadBox');
+            box.classList.add('has-image');
+            box.innerHTML =
+                '<input type="file" id="photoInput" accept="image/*" onchange="handlePhotoSelect(event)">' +
+                '<img class="photo-preview" src="' + url + '" alt="">';
+        }
+
+        async function handlePhotoSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const progress = document.getElementById('uploadProgress');
+            progress.style.display = 'block';
+            document.getElementById('saveBtn').disabled = true;
+
+            try {
+                // 1. Ask our server for a signed upload slot
+                const sigRes = await fetch(API_BASE + '/upload-signature', {
+                    headers: { 'x-admin-key': getAdminKey() }
+                });
+                if (!sigRes.ok) throw new Error('Could not get upload permission');
+                const sig = await sigRes.json();
+
+                // 2. Upload the actual photo straight to Cloudinary
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('api_key', sig.apiKey);
+                formData.append('timestamp', sig.timestamp);
+                formData.append('signature', sig.signature);
+                formData.append('folder', sig.folder);
+
+                const uploadRes = await fetch(
+                    'https://api.cloudinary.com/v1_1/' + sig.cloudName + '/image/upload',
+                    { method: 'POST', body: formData }
+                );
+                const uploadData = await uploadRes.json();
+                if (!uploadData.secure_url) throw new Error('Upload failed');
+
+                uploadedImageUrl = uploadData.secure_url;
+                showPhotoPreview(uploadedImageUrl);
+                showToast('Photo uploaded');
+            } catch (err) {
+                console.error(err);
+                showToast('Photo upload failed. Try again.', true);
+            } finally {
+                progress.style.display = 'none';
+                document.getElementById('saveBtn').disabled = false;
+            }
+        }
+
+        /* ── SAVE (ADD OR EDIT) ── */
+        async function saveProduct(e) {
+            e.preventDefault();
+
+            const sizeRows = Array.from(document.querySelectorAll('.size-row'));
+            const sizes = sizeRows.map(function(row) {
+                return {
+                    label: row.querySelector('.size-label-input').value.trim(),
+                    price: parseInt(row.querySelector('.size-price-input').value, 10) || 0
+                };
+            }).filter(function(s){ return s.label && s.price > 0; });
+
+            if (sizes.length === 0) {
+                showToast('Add at least one size with a price.', true);
+                return;
+            }
+
+            const payload = {
+                name: document.getElementById('fieldName').value.trim(),
+                category: document.getElementById('fieldCategory').value,
+                badge: document.getElementById('fieldBadge').value,
+                description: document.getElementById('fieldDescription').value.trim(),
+                image: uploadedImageUrl || '',
+                notes: {
+                    top: document.getElementById('fieldTop').value.trim(),
+                    middle: document.getElementById('fieldMiddle').value.trim(),
+                    base: document.getElementById('fieldBase').value.trim()
+                },
+                sizes: sizes
+            };
+
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'Saving\u2026';
+
+            try {
+                const url = editingId ? API_BASE + '/products?id=' + editingId : API_BASE + '/products';
+                const method = editingId ? 'PUT' : 'POST';
+                const res = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json', 'x-admin-key': getAdminKey() },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) throw new Error('Save failed');
+
+                showToast(editingId ? 'Perfume updated' : 'Perfume added');
+                closeForm();
+                loadProducts();
+            } catch (err) {
+                showToast('Could not save. Please try again.', true);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = 'Save Perfume';
+            }
+        }
+
+        /* ── DELETE ── */
+        function askDelete(id) {
+            pendingDeleteId = id;
+            const p = products.find(function(x){ return x.id === id; });
+            document.getElementById('confirmProductName').textContent = p ? p.name : '';
+            document.getElementById('confirmOverlay').classList.add('active');
+        }
+
+        function closeConfirm() {
+            document.getElementById('confirmOverlay').classList.remove('active');
+            pendingDeleteId = null;
+        }
+
+        async function confirmDelete() {
+            if (!pendingDeleteId) return;
+            try {
+                const res = await fetch(API_BASE + '/products?id=' + pendingDeleteId, {
+                    method: 'DELETE',
+                    headers: { 'x-admin-key': getAdminKey() }
+                });
+                if (!res.ok) throw new Error('Delete failed');
+                showToast('Perfume deleted');
+                closeConfirm();
+                loadProducts();
+            } catch (err) {
+                showToast('Could not delete. Please try again.', true);
+            }
+        }
+
+        /* ── BACKDROP CLICKS ── */
+        document.getElementById('formOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeForm();
+        });
+        document.getElementById('confirmOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeConfirm();
+        });
+    </script>
+</body>
+</html>
