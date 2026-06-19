@@ -1060,8 +1060,8 @@
         </div>
         <div>
             <form class="newsletter-form" id="newsletterForm" onsubmit="handleSubscribe(event)">
-                <input type="email" placeholder="Enter your email address" required>
-                <button type="submit" class="subscribe-btn">Subscribe</button>
+                <input type="email" id="newsletterEmail" placeholder="Enter your email address" required>
+                <button type="submit" class="subscribe-btn" id="subscribeBtn">Subscribe</button>
             </form>
             <div class="newsletter-success" id="newsletterSuccess">
                 &#10003; Thank you for subscribing! Welcome to E&amp;E Scents.
@@ -1104,10 +1104,30 @@
             }
         });
 
-        function handleSubscribe(e) {
+        const API_BASE = '/api';
+
+        async function handleSubscribe(e) {
             e.preventDefault();
-            document.getElementById('newsletterForm').style.display = 'none';
-            document.getElementById('newsletterSuccess').style.display = 'block';
+            var email = document.getElementById('newsletterEmail').value.trim();
+            var btn = document.getElementById('subscribeBtn');
+            btn.disabled = true;
+            btn.textContent = 'Subscribing…';
+
+            try {
+                var res = await fetch(API_BASE + '/subscribers', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email })
+                });
+                if (!res.ok) throw new Error('Subscribe failed');
+
+                document.getElementById('newsletterForm').style.display = 'none';
+                document.getElementById('newsletterSuccess').style.display = 'block';
+            } catch (err) {
+                btn.disabled = false;
+                btn.textContent = 'Subscribe';
+                alert('Something went wrong. Please try again in a moment.');
+            }
         }
 
         (function() {
