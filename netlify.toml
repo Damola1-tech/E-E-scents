@@ -1,0 +1,25 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+# Route /api/products  ->  the products.js function
+# Route /api/upload-signature  ->  the upload-signature.js function
+[[redirects]]
+  from = "/api/products"
+  to = "/.netlify/functions/products"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/upload-signature"
+  to = "/.netlify/functions/upload-signature"
+  status = 200
+  force = true
+
+# The admin page is its own folder served at /admin/
+# It is NOT linked anywhere on the public site — only people who know
+# the direct URL can reach it, and it's also password protected.
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
