@@ -27,7 +27,6 @@
             -webkit-text-size-adjust: 100%;
         }
 
-        /* ── HEADER ── */
         header {
             position: sticky;
             top: 0;
@@ -64,7 +63,6 @@
             display: block;
         }
 
-        /* Fallback if logo image missing */
         .logo img[src=""] , .logo img:not([src]) {
             display: none;
         }
@@ -125,7 +123,6 @@
 
         .cart-btn:hover { background: var(--gold); }
 
-        /* Hamburger – mobile only */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -171,7 +168,6 @@
 
         .mobile-menu a:last-child { border-bottom: none; }
 
-        /* ── HERO SLIDESHOW ── */
         .hero {
             position: relative;
             height: 92vh;
@@ -185,7 +181,6 @@
             text-align: center;
         }
 
-        /* Each slide sits stacked, full size */
         .hero-slide {
             position: absolute;
             inset: 0;
@@ -196,7 +191,6 @@
             will-change: transform, opacity;
         }
 
-        /* Dark overlay on every slide */
         .hero-slide::after {
             content: '';
             position: absolute;
@@ -208,12 +202,10 @@
             );
         }
 
-        /* Active slide fades in */
         .hero-slide.active {
             opacity: 1;
         }
 
-        /* Full-cover video inside each slide */
         .slide-video {
             position: absolute;
             inset: 0;
@@ -224,7 +216,6 @@
             z-index: 1;
         }
 
-        /* Image fallback — sits behind video, shows if no video file */
         .slide-bg {
             position: absolute;
             inset: 0;
@@ -233,12 +224,8 @@
             z-index: 0;
         }
 
-        /* Ken Burns on image-only slides */
         .slide-bg.kb-zoom-in { animation: kbZoomIn 8s ease-out forwards; }
 
-        /* ── KEN BURNS ANIMATIONS ──
-           Each slide gets a slightly different motion so it feels
-           varied and cinematic, not repetitive.                    */
         .hero-slide.active.kb-zoom-in {
             animation: kbZoomIn 7s ease-out forwards;
         }
@@ -269,7 +256,6 @@
             to   { transform: scale(1.06) translate(-2%, 0); }
         }
 
-        /* Dot indicators */
         .hero-dots {
             position: absolute;
             bottom: 2rem;
@@ -297,7 +283,6 @@
             transform: scale(1.35);
         }
 
-        /* Arrow buttons */
         .hero-arrow {
             position: absolute;
             top: 50%;
@@ -336,7 +321,6 @@
             width: 100%;
         }
 
-        /* Text fade-in when slide activates */
         .hero-content-inner {
             animation: heroTextIn 1.2s ease forwards;
         }
@@ -398,7 +382,6 @@
             border-color: white;
         }
 
-        /* ── FEATURED ── */
         .featured {
             max-width: 1300px;
             margin: 5rem auto;
@@ -444,7 +427,6 @@
             box-shadow: 0 14px 36px rgba(0,0,0,0.11);
         }
 
-        /* 4th card full-width on desktop */
         .product-card:nth-child(4) { grid-column: 1 / -1; }
         .product-card:nth-child(4) .product-image { height: 420px; }
 
@@ -499,7 +481,6 @@
             color: var(--dark);
         }
 
-        /* ── STORY ── */
         .story {
             background: var(--dark);
             color: white;
@@ -555,7 +536,6 @@
 
         .feature p { color: rgba(255,255,255,0.52); font-size: 0.86rem; line-height: 1.75; font-weight: 300; }
 
-        /* ── TESTIMONIALS ── */
         .testimonials {
             max-width: 1300px;
             margin: 5rem auto;
@@ -608,7 +588,6 @@
             font-style: italic;
         }
 
-        /* ── BLOG ── */
         .blog { background: var(--dark); padding: 5rem 2rem; }
 
         .blog-content { max-width: 1300px; margin: 0 auto; }
@@ -662,7 +641,6 @@
             letter-spacing: 0.05em;
         }
 
-        /* ── NEWSLETTER ── */
         .newsletter {
             max-width: 1300px;
             margin: 5rem auto;
@@ -721,7 +699,6 @@
             font-size: 0.88rem;
         }
 
-        /* ── FOOTER ── */
         footer {
             background: var(--dark);
             border-top: 1px solid rgba(255,255,255,0.06);
@@ -768,9 +745,6 @@
 
         .footer-copy { color: rgba(255,255,255,0.35); font-size: 0.76rem; }
 
-        /* ═══════════════════════════════
-           RESPONSIVE — TABLET 900px
-        ═══════════════════════════════ */
         @media (max-width: 900px) {
             .nav-links { display: none; }
             .hamburger { display: flex; }
@@ -783,9 +757,6 @@
             }
         }
 
-        /* ═══════════════════════════════
-           RESPONSIVE — MOBILE 600px
-        ═══════════════════════════════ */
         @media (max-width: 600px) {
             nav { padding: 0 1.2rem; height: 60px; }
 
@@ -803,13 +774,11 @@
 
             .featured { margin: 3.5rem auto; padding: 0 1.2rem; }
 
-            /* 2-column grid on mobile, ALL equal */
             .products-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 0.9rem;
             }
 
-            /* reset 4th card back to normal on mobile */
             .product-card:nth-child(4) { grid-column: auto; }
             .product-card:nth-child(4) .product-image { height: 160px; }
 
@@ -842,7 +811,6 @@
             .footer-links { gap: 1.2rem; }
         }
 
-        /* Very small phones */
         @media (max-width: 380px) {
             .products-grid { gap: 0.6rem; }
             .product-image { height: 135px; }
@@ -879,35 +847,16 @@
         </div>
     </header>
 
-    <!-- Hero Slideshow -->
     <section class="hero" id="heroSection">
 
-        <!--
-        ═══════════════════════════════════════════════════════
-        HOW TO ADD YOUR VIDEOS:
-        1. Go to pexels.com and download these FREE videos:
-           • "Woman spraying perfume"  → save as  videos/hero1.mp4
-           • "Applying perfume wrist"  → save as  videos/hero2.mp4
-           • "Man spraying cologne"    → save as  videos/hero3.mp4
-        2. Create a folder called "videos" next to index.html
-        3. Put the mp4 files inside it
-        4. The slides below will automatically show them!
-
-        No videos yet? The slides show beautiful images instead.
-        ═══════════════════════════════════════════════════════
-        -->
-
-        <!-- SLIDE 1 — video (hero1.mp4) with image fallback -->
         <div class="hero-slide active" id="slide1">
             <video class="slide-video" id="vid1" autoplay muted loop playsinline
                    onerror="this.style.display='none'">
                 <source src="videos/hero1.mp4" type="video/mp4">
             </video>
-            <!-- fallback image shown if no video file -->
             <div class="slide-bg" style="background-image:url('images/spraying tomford.jpg')"></div>
         </div>
 
-        <!-- SLIDE 2 — video (hero2.mp4) with image fallback -->
         <div class="hero-slide" id="slide2">
             <video class="slide-video" id="vid2" muted loop playsinline
                    onerror="this.style.display='none'">
@@ -916,7 +865,6 @@
             <div class="slide-bg" style="background-image:url('images/Yara.jpg')"></div>
         </div>
 
-        <!-- SLIDE 3 — video (hero3.mp4) with image fallback -->
         <div class="hero-slide" id="slide3">
             <video class="slide-video" id="vid3" muted loop playsinline
                    onerror="this.style.display='none'">
@@ -925,19 +873,15 @@
             <div class="slide-bg" style="background-image:url('images/Armaf Club De Nuit Intense Man (2).jpg')"></div>
         </div>
 
-        <!-- SLIDE 4 — your own hero image -->
         <div class="hero-slide" id="slide4">
             <div class="slide-bg kb-zoom-in" style="background-image:url('images/hero.jpg')"></div>
         </div>
 
-        <!-- Arrow controls -->
         <button class="hero-arrow prev" onclick="heroNav(-1)" aria-label="Previous">&#8592;</button>
         <button class="hero-arrow next" onclick="heroNav(1)"  aria-label="Next">&#8594;</button>
 
-        <!-- Dot indicators -->
         <div class="hero-dots" id="heroDots"></div>
 
-        <!-- Text content -->
         <div class="hero-content">
             <div class="hero-content-inner" id="heroTextInner">
                 <span class="hero-eyebrow">Luxury Fragrances</span>
@@ -949,7 +893,6 @@
 
     </section>
 
-    <!-- Featured -->
     <section class="featured" id="shop">
         <span class="section-label">Handpicked For You</span>
         <h2 class="section-title">Top Selling Perfumes</h2>
@@ -991,7 +934,6 @@
                 </div>
             </div>
 
-            <!-- 4th product — full width on desktop -->
             <div class="product-card" onclick="window.location.href='shop.html'">
                 <div class="product-image">
                     <img src="images/spraying tomford.jpg" alt="Tom Ford Black Orchid"
@@ -1007,7 +949,6 @@
         </div>
     </section>
 
-    <!-- Our Story -->
     <section class="story" id="about">
         <div class="story-content">
             <div class="story-text">
@@ -1041,7 +982,6 @@
         </div>
     </section>
 
-    <!-- Testimonials -->
     <section class="testimonials">
         <span class="section-label">Happy Customers</span>
         <h2 class="section-title">What People Are Saying</h2>
@@ -1075,7 +1015,6 @@
         </div>
     </section>
 
-    <!-- Blog -->
     <section class="blog">
         <div class="blog-content">
             <span class="section-label">From The Community</span>
@@ -1113,7 +1052,6 @@
         </div>
     </section>
 
-    <!-- Newsletter -->
     <section class="newsletter" id="contact">
         <div>
             <span class="section-label">Stay In The Know</span>
@@ -1131,7 +1069,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-logo">
@@ -1151,7 +1088,6 @@
     </footer>
 
     <script>
-        /* ── MOBILE MENU ── */
         function toggleMenu() {
             document.getElementById('mobileMenu').classList.toggle('open');
         }
@@ -1159,7 +1095,6 @@
             document.getElementById('mobileMenu').classList.remove('open');
         }
 
-        /* close on outside tap */
         document.addEventListener('click', function(e) {
             const menu = document.getElementById('mobileMenu');
             const btn  = document.querySelector('.hamburger');
@@ -1169,14 +1104,12 @@
             }
         });
 
-        /* ── NEWSLETTER ── */
         function handleSubscribe(e) {
             e.preventDefault();
             document.getElementById('newsletterForm').style.display = 'none';
             document.getElementById('newsletterSuccess').style.display = 'block';
         }
 
-        /* ── HERO SLIDESHOW + VIDEO ── */
         (function() {
             var slides    = document.querySelectorAll('.hero-slide');
             var dotsWrap  = document.getElementById('heroDots');
@@ -1186,7 +1119,6 @@
             var timer     = null;
             var INTERVAL  = 7000;
 
-            /* Build dots */
             for (var i = 0; i < total; i++) {
                 var dot = document.createElement('button');
                 dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
@@ -1205,7 +1137,6 @@
                 var v = vid(slide);
                 if (!v) return;
                 v.play().catch(function() {
-                    /* Video file missing or blocked — hide video, show bg image */
                     v.style.display = 'none';
                 });
             }
@@ -1227,7 +1158,6 @@
                 dots[current].classList.add('active');
                 playSlide(slides[current]);
 
-                /* Re-trigger text fade-in */
                 textInner.style.animation = 'none';
                 
                 void textInner.offsetWidth;
@@ -1243,17 +1173,14 @@
 
             window.heroNav = function(dir) { goTo(current + dir); resetTimer(); };
 
-            /* Pause on hover */
             var section = document.getElementById('heroSection');
             section.addEventListener('mouseenter', function() { clearInterval(timer); });
             section.addEventListener('mouseleave', resetTimer);
 
-            /* Start */
             playSlide(slides[0]);
             resetTimer();
         })();
 
-        /* ── SMOOTH SCROLL ── */
         document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
             anchor.addEventListener('click', function(e) {
                 var href = this.getAttribute('href');
