@@ -6,9 +6,11 @@
 //   DELETE /api/products?id=5     -> admin only, deletes product 5
 //
 // "Admin only" is enforced with a shared-secret header (x-admin-key).
-// Storage is Vercel KV (Redis) — free tier, set up via your Vercel dashboard.
+// Storage is Upstash Redis (set up via the Upstash integration in your
+// Vercel dashboard — it injects the connection details automatically).
 
-const { kv } = require('@vercel/kv');
+const { Redis } = require('@upstash/redis');
+const redis = Redis.fromEnv();
 
 const KEY_NAME = 'ee_scents_products';
 const ADMIN_KEY = process.env.ADMIN_KEY;
@@ -27,9 +29,9 @@ function isAuthorized(req) {
 }
 
 async function loadProducts() {
-  const data = await kv.get(KEY_NAME);
+  const data = await redis.get(KEY_NAME);
   if (data) return data;
-  await kv.set(KEY_NAME, seed);
+  await redis.set(KEY_NAME, seed);
   return seed;
 }
 
@@ -60,7 +62,7 @@ module.exports = async (req, res) => {
       : 1;
     newProduct.id = nextId;
     products.push(newProduct);
-    await kv.set(KEY_NAME, products);
+    await redis.set(KEY_NAME, products);
     return res.status(201).json(newProduct);
   }
 
@@ -70,7 +72,7 @@ module.exports = async (req, res) => {
     const idx = products.findIndex((p) => p.id === id);
     if (idx === -1) return res.status(404).json({ error: 'Product not found' });
     products[idx] = { ...products[idx], ...updates, id };
-    await kv.set(KEY_NAME, products);
+    await redis.set(KEY_NAME, products);
     return res.status(200).json(products[idx]);
   }
 
@@ -79,7 +81,7 @@ module.exports = async (req, res) => {
     const idx = products.findIndex((p) => p.id === id);
     if (idx === -1) return res.status(404).json({ error: 'Product not found' });
     const [removed] = products.splice(idx, 1);
-    await kv.set(KEY_NAME, products);
+    await redis.set(KEY_NAME, products);
     return res.status(200).json(removed);
   }
 
