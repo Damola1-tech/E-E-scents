@@ -125,6 +125,23 @@
 
         .cart-btn:hover { background: var(--gold); }
 
+        .wishlist-nav-btn {
+            background: transparent;
+            color: var(--dark);
+            border: 1px solid #ddd;
+            padding: 0.55rem 0.85rem;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            position: relative;
+            transition: border-color 0.3s, color 0.3s;
+        }
+        .wishlist-nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+        .wishlist-nav-btn.has-items { color: var(--gold); border-color: var(--gold); }
+
         .cart-badge {
             background: var(--gold);
             color: #fff;
@@ -625,6 +642,28 @@
         }
 
         .wishlist-btn:hover { border-color: var(--dark); }
+        .wishlist-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.06); }
+
+        /* Heart icon directly on each product card */
+        .wishlist-heart {
+            position: absolute;
+            top: 10px; right: 10px;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.92);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--mid);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: color 0.2s, transform 0.15s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .wishlist-heart:hover { transform: scale(1.1); }
+        .wishlist-heart.active { color: #c44; }
 
         /* ── CART OVERLAY + SIDEBAR ── */
         .overlay {
@@ -1027,6 +1066,10 @@
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
             <div class="nav-actions">
+                <button class="wishlist-nav-btn" onclick="toggleWishlistPanel()">
+                    &#9825;
+                    <span class="cart-badge" id="wishlistCount">0</span>
+                </button>
                 <button class="cart-btn" onclick="toggleCart()">
                     &#128717; Cart
                     <span class="cart-badge" id="cartCount">0</span>
@@ -1103,6 +1146,23 @@
                 <span id="cartTotal">&#8358;0</span>
             </div>
             <button class="checkout-btn" onclick="openCheckoutForm()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Wishlist overlay -->
+    <div class="overlay" id="wishlistOverlay" onclick="toggleWishlistPanel()"></div>
+
+    <!-- Wishlist Panel -->
+    <div class="cart-sidebar" id="wishlistSidebar">
+        <div class="cart-header">
+            <h3>Your Wishlist</h3>
+            <button class="cart-close" onclick="toggleWishlistPanel()">&#215;</button>
+        </div>
+        <div class="cart-items" id="wishlistItems">
+            <div class="cart-empty">
+                <p>Your wishlist is empty</p>
+                <small>Tap the heart on any perfume to save it here</small>
+            </div>
         </div>
     </div>
 
@@ -1190,6 +1250,24 @@
         let currentSort    = 'featured';
         let modalQty       = 1;
 
+        // Wishlist persists on this device using localStorage — there's
+        // no customer login system on this site, so "their wishlist" means
+        // "saved on the browser they're currently using."
+        let wishlist = [];
+        try {
+            wishlist = JSON.parse(localStorage.getItem('ee_wishlist') || '[]');
+        } catch (e) {
+            wishlist = [];
+        }
+
+        function saveWishlist() {
+            try {
+                localStorage.setItem('ee_wishlist', JSON.stringify(wishlist));
+            } catch (e) {
+                console.error('Could not save wishlist', e);
+            }
+        }
+
         /* ── UTILS ── */
         function formatPrice(n) {
             return '&#8358;' + Number(n).toLocaleString();
@@ -1235,10 +1313,11 @@
         async function loadProducts() {
             var grid = document.getElementById('productsGrid');
             try {
-                var res = await fetch(API_BASE + '/products');
+                var res = await fetch(API_BASE + '/products', { cache: 'no-store' });
                 if (!res.ok) throw new Error('Bad response: ' + res.status);
                 products = await res.json();
                 renderProducts();
+                updateWishlistUI();
             } catch (err) {
                 console.error('Failed to load products:', err);
                 grid.innerHTML =
@@ -1286,6 +1365,7 @@
                         '<div class="product-image">' +
                             (p.badge ? '<span class="badge ' + badgeCls + '">' + p.badge + '</span>' : '') +
                             imgHTML(p) +
+                            '<button class="wishlist-heart' + (isWishlisted(p.id) ? ' active' : '') + '" data-id="' + p.id + '" onclick="event.stopPropagation();toggleWishlist(' + p.id + ')" aria-label="Save to wishlist">' + (isWishlisted(p.id) ? '&#9829;' : '&#9825;') + '</button>' +
                             '<button class="quick-add" onclick="event.stopPropagation();quickAdd(' + p.id + ')">+ Quick Add</button>' +
                         '</div>' +
                         '<div class="product-info">' +
@@ -1367,7 +1447,9 @@
                             '<button class="qty-btn" onclick="changeQty(1)">+</button>' +
                         '</div></div>' +
                     '<button class="add-to-cart-btn" onclick="addFromModal(' + p.id + ')">Add to Cart</button>' +
-                    '<button class="wishlist-btn">&#9825; Add to Wishlist</button>' +
+                    '<button class="wishlist-btn" id="modalWishlistBtn" data-id="' + p.id + '" onclick="toggleWishlist(' + p.id + ')">' +
+                        (isWishlisted(p.id) ? '&#9829; Saved to Wishlist' : '&#9825; Add to Wishlist') +
+                    '</button>' +
                 '</div>';
 
             document.querySelectorAll('.size-btn').forEach(function(btn) {
@@ -1437,6 +1519,91 @@
         function toggleCart() {
             document.getElementById('cartSidebar').classList.toggle('active');
             document.getElementById('cartOverlay').classList.toggle('active');
+        }
+
+        /* ── WISHLIST ── */
+        function isWishlisted(id) {
+            return wishlist.indexOf(id) !== -1;
+        }
+
+        function toggleWishlist(id) {
+            var idx = wishlist.indexOf(id);
+            if (idx === -1) {
+                wishlist.push(id);
+                showToast('&#9825; Added to wishlist');
+            } else {
+                wishlist.splice(idx, 1);
+                showToast('Removed from wishlist');
+            }
+            saveWishlist();
+            updateWishlistUI();
+
+            // If the modal is open for this product, refresh its heart icon
+            var heartBtn = document.getElementById('modalWishlistBtn');
+            if (heartBtn && parseInt(heartBtn.dataset.id, 10) === id) {
+                renderWishlistButton(id);
+            }
+            // If a product card's heart icon is visible, refresh it too
+            var cardHeart = document.querySelector('.wishlist-heart[data-id="' + id + '"]');
+            if (cardHeart) {
+                var saved = isWishlisted(id);
+                cardHeart.classList.toggle('active', saved);
+                cardHeart.innerHTML = saved ? '&#9829;' : '&#9825;';
+            }
+        }
+
+        function toggleWishlistPanel() {
+            document.getElementById('wishlistSidebar').classList.toggle('active');
+            document.getElementById('wishlistOverlay').classList.toggle('active');
+        }
+
+        function updateWishlistUI() {
+            var badge = document.getElementById('wishlistCount');
+            var navBtn = document.querySelector('.wishlist-nav-btn');
+            badge.textContent = wishlist.length;
+            navBtn.classList.toggle('has-items', wishlist.length > 0);
+
+            var container = document.getElementById('wishlistItems');
+            if (wishlist.length === 0) {
+                container.innerHTML = '<div class="cart-empty"><p>Your wishlist is empty</p><small>Tap the heart on any perfume to save it here</small></div>';
+                return;
+            }
+
+            var items = wishlist
+                .map(function(id) { return products.find(function(p){ return p.id === id; }); })
+                .filter(Boolean);
+
+            if (items.length === 0) {
+                container.innerHTML = '<div class="cart-empty"><p>Your wishlist is empty</p><small>Tap the heart on any perfume to save it here</small></div>';
+                return;
+            }
+
+            container.innerHTML = items.map(function(p) {
+                var imgEl = p.image ?
+                    '<img src="' + p.image + '" alt="' + p.name + '" onerror="this.style.display=\'none\'">' :
+                    (p.emoji || '&#127873;');
+                return '<div class="cart-item">' +
+                    '<div class="cart-item-image">' + imgEl + '</div>' +
+                    '<div class="cart-item-details">' +
+                        '<h4>' + p.name + '</h4>' +
+                        '<div class="cart-item-size">' + formatPrice(basePrice(p)) + (p.sizes.length > 1 ? ' onward' : '') + '</div>' +
+                        '<div class="cart-item-footer">' +
+                            '<button class="cart-qty-btn" style="width:auto;padding:0 0.7rem;font-size:0.78rem;" onclick="quickAdd(' + p.id + ')">Add to Cart</button>' +
+                        '</div>' +
+                        '<button class="cart-remove" onclick="toggleWishlist(' + p.id + ')">Remove</button>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        function renderWishlistButton(id) {
+            var btn = document.getElementById('modalWishlistBtn');
+            if (!btn) return;
+            var saved = isWishlisted(id);
+            btn.classList.toggle('active', saved);
+            btn.innerHTML = saved
+                ? '&#9829; Saved to Wishlist'
+                : '&#9825; Add to Wishlist';
         }
 
         function updateCartUI() {
@@ -1556,6 +1723,7 @@
         /* ── INIT ── */
         loadProducts();
         updateCartUI();
+        updateWishlistUI();
     </script>
 </body>
 </html>
