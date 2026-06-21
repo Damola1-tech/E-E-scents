@@ -1005,7 +1005,15 @@
             nav { padding: 0 1.2rem; height: 60px; }
             .logo img { height: 34px; }
             .logo-text { font-size: 1rem; }
-            .cart-btn { padding: 0.45rem 0.85rem; font-size: 0.75rem; }
+            .cart-btn { padding: 0.45rem 0.7rem; font-size: 0.72rem; }
+            .nav-actions { gap: 0.45rem; }
+            .wishlist-nav-btn { display: none; }
+
+            .mobile-menu a {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
 
             .shop-container { padding: 2rem 1.2rem 3rem; }
 
@@ -1084,6 +1092,9 @@
             <a href="shop.html" onclick="closeMenu()">Shop</a>
             <a href="index.html#about" onclick="closeMenu()">About</a>
             <a href="index.html#contact" onclick="closeMenu()">Contact</a>
+            <a href="#" onclick="closeMenu();toggleWishlistPanel();return false;">
+                Wishlist <span class="cart-badge" id="wishlistCountMobile">0</span>
+            </a>
         </div>
     </header>
 
@@ -1559,8 +1570,10 @@
 
         function updateWishlistUI() {
             var badge = document.getElementById('wishlistCount');
+            var mobileBadge = document.getElementById('wishlistCountMobile');
             var navBtn = document.querySelector('.wishlist-nav-btn');
             badge.textContent = wishlist.length;
+            if (mobileBadge) mobileBadge.textContent = wishlist.length;
             navBtn.classList.toggle('has-items', wishlist.length > 0);
 
             var container = document.getElementById('wishlistItems');
