@@ -682,6 +682,7 @@
             const list = document.getElementById('subscriberList');
             try {
                 const res = await fetch(API_BASE + '/subscribers', {
+                    cache: 'no-store',
                     headers: { 'x-admin-key': getAdminKey() }
                 });
                 if (!res.ok) throw new Error('Failed to load');
@@ -745,10 +746,12 @@
         async function loadProducts() {
             const list = document.getElementById('productList');
             try {
-                const res = await fetch(API_BASE + '/products');
+                const res = await fetch(API_BASE + '/products', { cache: 'no-store' });
+                if (!res.ok) throw new Error('Server returned ' + res.status);
                 products = await res.json();
                 renderList();
             } catch (err) {
+                console.error('Failed to load products:', err);
                 list.innerHTML = '<div class="empty-state"><p>Couldn\'t load products.</p></div>';
             }
         }
