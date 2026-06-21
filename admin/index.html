@@ -763,28 +763,36 @@
                 return;
             }
             list.innerHTML = products.map(function(p) {
-                const priceRange = p.sizes.length > 1
-                    ? formatPrice(p.sizes[0].price) + ' \u2013 ' + formatPrice(p.sizes[p.sizes.length-1].price)
-                    : formatPrice(p.sizes[0].price);
-                const thumb = p.image
-                    ? '<img src="' + p.image + '" alt="">'
-                    : '\u{1F33C}';
-                return '<div class="product-row">' +
-                    '<div class="row-thumb">' + thumb + '</div>' +
-                    '<div class="row-info">' +
-                        '<h3>' + p.name + '</h3>' +
-                        '<div class="row-meta">' +
-                            '<span>' + p.category + '</span>' +
-                            (p.badge ? '<span>&bull; ' + p.badge + '</span>' : '') +
-                            '<span>&bull; ' + priceRange + '</span>' +
-                            '<span>&bull; ' + p.sizes.length + ' size' + (p.sizes.length > 1 ? 's' : '') + '</span>' +
+                try {
+                    const sizes = Array.isArray(p.sizes) ? p.sizes : [];
+                    const priceRange = sizes.length === 0
+                        ? 'No price set'
+                        : sizes.length > 1
+                            ? formatPrice(sizes[0].price) + ' \u2013 ' + formatPrice(sizes[sizes.length-1].price)
+                            : formatPrice(sizes[0].price);
+                    const thumb = p.image
+                        ? '<img src="' + p.image + '" alt="">'
+                        : '\u{1F33C}';
+                    return '<div class="product-row">' +
+                        '<div class="row-thumb">' + thumb + '</div>' +
+                        '<div class="row-info">' +
+                            '<h3>' + (p.name || 'Untitled') + '</h3>' +
+                            '<div class="row-meta">' +
+                                '<span>' + (p.category || '') + '</span>' +
+                                (p.badge ? '<span>&bull; ' + p.badge + '</span>' : '') +
+                                '<span>&bull; ' + priceRange + '</span>' +
+                                '<span>&bull; ' + sizes.length + ' size' + (sizes.length !== 1 ? 's' : '') + '</span>' +
+                            '</div>' +
                         '</div>' +
-                    '</div>' +
-                    '<div class="row-actions">' +
-                        '<button class="edit-btn" onclick="openForm(' + p.id + ')">Edit</button>' +
-                        '<button class="delete-btn" onclick="askDelete(' + p.id + ')">Delete</button>' +
+                        '<div class="row-actions">' +
+                            '<button class="edit-btn" onclick="openForm(' + p.id + ')">Edit</button>' +
+                            '<button class="delete-btn" onclick="askDelete(' + p.id + ')">Delete</button>' +
                     '</div>' +
                 '</div>';
+                } catch (e) {
+                    console.error('Skipping a product that failed to render:', p, e);
+                    return '';
+                }
             }).join('');
         }
 
