@@ -1270,27 +1270,38 @@
             }
 
             grid.innerHTML = list.map(function(p) {
-                var badgeCls = p.badge === 'Limited' ? 'limited' : (p.badge === 'New' ? 'new-badge' : '');
-                var priceDisplay = p.sizes.length > 1
-                    ? '<span style="font-size:.72rem;font-weight:400;letter-spacing:.06em;opacity:.7">From </span>' + formatPrice(basePrice(p))
-                    : formatPrice(basePrice(p));
+                try {
+                    // Defend against any product missing required fields
+                    // (e.g. saved without sizes) — skip it instead of
+                    // crashing the whole grid for every other product.
+                    var sizes = Array.isArray(p.sizes) ? p.sizes : [];
+                    if (sizes.length === 0) return '';
 
-                return '<div class="product-card" onclick="openModal(' + p.id + ')">' +
-                    '<div class="product-image">' +
-                        (p.badge ? '<span class="badge ' + badgeCls + '">' + p.badge + '</span>' : '') +
-                        imgHTML(p) +
-                        '<button class="quick-add" onclick="event.stopPropagation();quickAdd(' + p.id + ')">+ Quick Add</button>' +
-                    '</div>' +
-                    '<div class="product-info">' +
-                        '<div class="product-category">' + p.category + '</div>' +
-                        '<h3>' + p.name + '</h3>' +
-                        '<p class="product-description">' + p.description + '</p>' +
-                        '<div class="product-footer">' +
-                            '<span class="price">' + priceDisplay + '</span>' +
-                            '<span class="rating">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' +
+                    var badgeCls = p.badge === 'Limited' ? 'limited' : (p.badge === 'New' ? 'new-badge' : '');
+                    var priceDisplay = sizes.length > 1
+                        ? '<span style="font-size:.72rem;font-weight:400;letter-spacing:.06em;opacity:.7">From </span>' + formatPrice(basePrice(p))
+                        : formatPrice(basePrice(p));
+
+                    return '<div class="product-card" onclick="openModal(' + p.id + ')">' +
+                        '<div class="product-image">' +
+                            (p.badge ? '<span class="badge ' + badgeCls + '">' + p.badge + '</span>' : '') +
+                            imgHTML(p) +
+                            '<button class="quick-add" onclick="event.stopPropagation();quickAdd(' + p.id + ')">+ Quick Add</button>' +
+                        '</div>' +
+                        '<div class="product-info">' +
+                            '<div class="product-category">' + (p.category || '') + '</div>' +
+                            '<h3>' + (p.name || 'Untitled') + '</h3>' +
+                            '<p class="product-description">' + (p.description || '') + '</p>' +
+                            '<div class="product-footer">' +
+                                '<span class="price">' + priceDisplay + '</span>' +
+                                '<span class="rating">&#9733;&#9733;&#9733;&#9733;&#9733;</span>' +
                         '</div>' +
                     '</div>' +
                 '</div>';
+                } catch (e) {
+                    console.error('Skipping a product that failed to render:', p, e);
+                    return '';
+                }
             }).join('');
         }
 
