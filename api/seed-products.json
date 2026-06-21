@@ -4,7 +4,7 @@
     "name": "Lattafa Asad",
     "category": "men",
     "badge": "Best Seller",
-    "image": "https://res.cloudinary.com/REPLACE_ME/lattafa-asad.jpg",
+    "image": "",
     "description": "A rich, oriental fragrance with vanilla and spices.",
     "notes": { "top": "Pineapple, Vanilla", "middle": "Black Pepper, Tobacco", "base": "Coffee, Dry Woods" },
     "sizes": [
@@ -17,7 +17,7 @@
     "name": "Afnan 9PM",
     "category": "unisex",
     "badge": "Best Seller",
-    "image": "https://res.cloudinary.com/REPLACE_ME/afnan-9pm.jpg",
+    "image": "",
     "description": "Sweet spicy fragrance with fresh apple and warm vanilla.",
     "notes": { "top": "Apple, Bergamot", "middle": "Cinnamon, Lavender", "base": "Vanilla, Orange" },
     "sizes": [
@@ -30,7 +30,7 @@
     "name": "Lattafa Khamrah Qahwa",
     "category": "unisex",
     "badge": "New",
-    "image": "https://res.cloudinary.com/REPLACE_ME/khamrah-qahwa.jpg",
+    "image": "",
     "description": "Rich coffee fragrance with vanilla and cinnamon.",
     "notes": { "top": "Cinnamon, Coffee", "middle": "Cardamom, Vanilla", "base": "Musk, Amber" },
     "sizes": [
